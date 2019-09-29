@@ -1,0 +1,245 @@
+I"�4<h2 id="summary-of-basic-commands">Summary of Basic Commands</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>Files</th>
+      <th>Folders</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Inspect</td>
+      <td>ls</td>
+      <td>ls</td>
+    </tr>
+    <tr>
+      <td>View content</td>
+      <td>cat</td>
+      <td>ls</td>
+    </tr>
+    <tr>
+      <td>Navigate to</td>
+      <td> </td>
+      <td>cd</td>
+    </tr>
+    <tr>
+      <td>Move</td>
+      <td>mv</td>
+      <td>mv</td>
+    </tr>
+    <tr>
+      <td>Copy</td>
+      <td>cp</td>
+      <td>cp -r</td>
+    </tr>
+    <tr>
+      <td>Create</td>
+      <td>nano</td>
+      <td>mkdir</td>
+    </tr>
+    <tr>
+      <td>Delete</td>
+      <td>rm</td>
+      <td>rmdir, rm -r</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="filesystem-hierarchy">Filesystem hierarchy</h2>
+
+<p>The following is an overview of a standard Unix filesystem.
+The exact hierarchy depends on the platform,
+so you may not see exactly the same files/directories on your computer:</p>
+
+<p><img src="../fig/standard-filesystem-hierarchy.svg" alt="Linux filesystem hierarchy" /></p>
+
+<h2 id="glossary">Glossary</h2>
+
+<dl>
+  <dt id="absolute-path">absolute path</dt>
+  <dd>A <a href="#path">path</a> that refers to a particular location in a file system.
+Absolute paths are usually written with respect to the file system’s
+<a href="#root-directory">root directory</a>,
+and begin with either “/” (on Unix) or “\” (on Microsoft Windows).
+See also: <a href="#relative-path">relative path</a>.</dd>
+  <dt id="argument">argument</dt>
+  <dd>A value given to a function or program when it runs.
+The term is often used interchangeably (and inconsistently) with <a href="#parameter">parameter</a>.</dd>
+  <dt id="command-shell">command shell</dt>
+  <dd>See <a href="#shell">shell</a></dd>
+  <dt id="command-line-interface">command-line interface</dt>
+  <dd>A user interface based on typing commands,
+usually at a <a href="#read-evaluate-print-loop">REPL</a>.
+See also: <a href="#graphical-user-interface">graphical user interface</a>.</dd>
+  <dt id="comment">comment</dt>
+  <dd>A remark in a program that is intended to help human readers understand what is going on,
+but is ignored by the computer.
+Comments in Python, R, and the Unix shell start with a <code class="highlighter-rouge">#</code> character and run to the end of the line;
+comments in SQL start with <code class="highlighter-rouge">--</code>,
+and other languages have other conventions.</dd>
+  <dt id="current-working-directory">current working directory</dt>
+  <dd>The directory that <a href="#relative-path">relative paths</a> are calculated from;
+equivalently,
+the place where files referenced by name only are searched for.
+Every <a href="#process">process</a> has a current working directory.
+The current working directory is usually referred to using the shorthand notation <code class="highlighter-rouge">.</code> (pronounced “dot”).</dd>
+  <dt id="file-system">file system</dt>
+  <dd>A set of files, directories, and I/O devices (such as keyboards and screens).
+A file system may be spread across many physical devices,
+or many file systems may be stored on a single physical device;
+the <a href="#operating-system">operating system</a> manages access.</dd>
+  <dt id="filename-extension">filename extension</dt>
+  <dd>The portion of a file’s name that comes after the final “.” character.
+By convention this identifies the file’s type:
+<code class="highlighter-rouge">.txt</code> means “text file”, <code class="highlighter-rouge">.png</code> means “Portable Network Graphics file”,
+and so on. These conventions are not enforced by most operating systems:
+it is perfectly possible (but confusing!) to name an MP3 sound file <code class="highlighter-rouge">homepage.html</code>.
+Since many applications use filename extensions to identify the <a href="#mime-type">MIME type</a> of the file,
+misnaming files may cause those applications to fail.</dd>
+  <dt id="filter">filter</dt>
+  <dd>A program that transforms a stream of data.
+Many Unix command-line tools are written as filters:
+they read data from <a href="#standard-input">standard input</a>,
+process it, and write the result to <a href="#standard-output">standard output</a>.</dd>
+  <dt id="flag">flag</dt>
+  <dd>A terse way to specify an option or setting to a command-line program.
+By convention Unix applications use a dash followed by a single letter,
+such as <code class="highlighter-rouge">-v</code>, or two dashes followed by a word, such as <code class="highlighter-rouge">--verbose</code>,
+while DOS applications use a slash, such as <code class="highlighter-rouge">/V</code>.
+Depending on the application, a flag may be followed by a single argument, as in <code class="highlighter-rouge">-o /tmp/output.txt</code>.</dd>
+  <dt id="for-loop">for loop</dt>
+  <dd>A loop that is executed once for each value in some kind of set, list, or range.
+See also: <a href="#while-loop">while loop</a>.</dd>
+  <dt id="graphical-user-interface">graphical user interface</dt>
+  <dd>A user interface based on selecting items and actions from a graphical display,
+usually controlled by using a mouse.
+See also: <a href="#command-line-interface">command-line interface</a>.</dd>
+  <dt id="home-directory">home directory</dt>
+  <dd>The default directory associated with an account on a computer system.
+By convention, all of a user’s files are stored in or below her home directory.</dd>
+  <dt id="loop">loop</dt>
+  <dd>A set of instructions to be executed multiple times. Consists of a <a href="#loop-body">loop body</a> and (usually) a
+condition for exiting the loop. See also <a href="#for-loop">for loop</a> and <a href="#while-loop">while loop</a>.</dd>
+  <dt id="loop-body">loop body</dt>
+  <dd>The set of statements or commands that are repeated inside a <a href="#for-loop">for loop</a>
+or <a href="#while-loop">while loop</a>.</dd>
+  <dt id="mime-type">MIME type</dt>
+  <dd>MIME (Multi-Purpose Internet Mail Extensions) types describe different file types for exchange on the Internet,
+for example images, audio, and documents.</dd>
+  <dt id="operating-system">operating system</dt>
+  <dd>Software that manages interactions between users, hardware, and software <a href="#process">processes</a>. Common
+examples are Linux, OS X, and Windows.</dd>
+  <dt id="orthogonal">orthogonal</dt>
+  <dd>To have meanings or behaviors that are independent of each other.
+If a set of concepts or tools are orthogonal,
+they can be combined in any way.</dd>
+  <dt id="parameter">parameter</dt>
+  <dd>A variable named in a function’s declaration that is used to hold a value passed into the call.
+The term is often used interchangeably (and inconsistently) with <a href="#argument">argument</a>.</dd>
+  <dt id="parent-directory">parent directory</dt>
+  <dd>The directory that “contains” the one in question.
+Every directory in a file system except the <a href="#root-directory">root directory</a> has a parent.
+A directory’s parent is usually referred to using the shorthand notation <code class="highlighter-rouge">..</code> (pronounced “dot dot”).</dd>
+  <dt id="path">path</dt>
+  <dd>A description that specifies the location of a file or directory within a <a href="#file-system">file system</a>.
+See also: <a href="#absolute-path">absolute path</a>, <a href="#relative-path">relative path</a>.</dd>
+  <dt id="pipe">pipe</dt>
+  <dd>A connection from the output of one program to the input of another.
+When two or more programs are connected in this way, they are called a “pipeline”.</dd>
+  <dt id="process">process</dt>
+  <dd>A running instance of a program, containing code, variable values,
+open files and network connections, and so on.
+Processes are the “actors” that the <a href="#operating-system">operating system</a> manages;
+it typically runs each process for a few milliseconds at a time
+to give the impression that they are executing simultaneously.</dd>
+  <dt id="prompt">prompt</dt>
+  <dd>A character or characters display by a <a href="#read-evaluate-print-loop">REPL</a> to show that
+it is waiting for its next command.</dd>
+  <dt id="quoting">quoting</dt>
+  <dd>(in the shell):
+Using quotation marks of various kinds to prevent the shell from interpreting special characters.
+For example, to pass the string <code class="highlighter-rouge">*.txt</code> to a program,
+it is usually necessary to write it as <code class="highlighter-rouge">'*.txt'</code> (with single quotes)
+so that the shell will not try to expand the <code class="highlighter-rouge">*</code> wildcard.</dd>
+  <dt id="read-evaluate-print-loop">read-evaluate-print loop</dt>
+  <dd>(REPL): A <a href="#command-line-interface">command-line interface</a> that reads a command from the user,
+executes it, prints the result, and waits for another command.</dd>
+  <dt id="redirect">redirect</dt>
+  <dd>To send a command’s output to a file rather than to the screen or another command,
+or equivalently to read a command’s input from a file.</dd>
+  <dt id="regular-expression">regular expression</dt>
+  <dd>A pattern that specifies a set of character strings.
+REs are most often used to find sequences of characters in strings.</dd>
+  <dt id="relative-path">relative path</dt>
+  <dd>A <a href="#path">path</a> that specifies the location of a file or directory
+with respect to the <a href="#current-working-directory">current working directory</a>.
+Any path that does not begin with a separator character (“/” or “\”) is a relative path.
+See also: <a href="#absolute-path">absolute path</a>.</dd>
+  <dt id="root-directory">root directory</dt>
+  <dd>The top-most directory in a <a href="#file-system">file system</a>.
+Its name is “/” on Unix (including Linux and Mac OS X) and “\” on Microsoft Windows.</dd>
+  <dt id="shell">shell</dt>
+  <dd>A <a href="#cli">command-line interface</a> such as Bash (the Bourne-Again Shell)
+or the Microsoft Windows DOS shell
+that allows a user to interact with the <a href="#operating-system">operating system</a>.</dd>
+  <dt id="shell-script">shell script</dt>
+  <dd>A set of <a href="#shell">shell</a> commands stored in a file for re-use.
+A shell script is a program executed by the shell;
+the name “script” is used for historical reasons.</dd>
+  <dt id="standard-input">standard input</dt>
+  <dd>A process’s default input stream.
+In interactive command-line applications,
+it is typically connected to the keyboard;
+in a <a href="#pipe">pipe</a>,
+it receives data from the <a href="#standard-output">standard output</a> of the preceding process.</dd>
+  <dt id="standard-output">standard output</dt>
+  <dd>A process’s default output stream.
+In interactive command-line applications,
+data sent to standard output is displayed on the screen;
+in a <a href="#pipe">pipe</a>,
+it is passed to the <a href="#standard-input">standard input</a> of the next process.</dd>
+  <dt id="sub-directory">sub-directory</dt>
+  <dd>A directory contained within another directory.</dd>
+  <dt id="tab-completion">tab completion</dt>
+  <dd>A feature provided by many interactive systems in which
+pressing the Tab key triggers automatic completion of the current word or command.</dd>
+  <dt id="variable">variable</dt>
+  <dd>A name in a program that is associated with a value or a collection of values.</dd>
+  <dt id="while-loop">while loop</dt>
+  <dd>A loop that keeps executing as long as some condition is true.
+See also: <a href="#for-loop">for loop</a>.</dd>
+  <dt id="wildcard">wildcard</dt>
+  <dd>A character used in pattern matching.
+In the Unix shell,
+the wildcard <code class="highlighter-rouge">*</code> matches zero or more characters,
+so that <code class="highlighter-rouge">*.txt</code> matches all files whose names end in <code class="highlighter-rouge">.txt</code>.</dd>
+</dl>
+
+<h2 id="external-references">External references</h2>
+
+<h3 id="opening-a-terminal">Opening a terminal</h3>
+<ul>
+  <li><a href="http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/">How to Use Terminal on a Mac</a></li>
+  <li><a href="https://git-for-windows.github.io/">Git for Windows</a></li>
+  <li><a href="https://www.windowscentral.com/how-install-bash-shell-command-line-windows-10">How to Install Bash shell command-line tool on Windows 10</a></li>
+  <li><a href="https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/">Install and Use the Linux Bash Shell on Windows 10</a></li>
+  <li><a href="https://www.howtogeek.com/265900/everything-you-can-do-with-windows-10s-new-bash-shell/">Using the Windows 10 Bash Shell</a></li>
+  <li><a href="http://faculty.smu.edu/reynolds/unixtut/windows.html">Using a UNIX/Linux emulator (Cygwin) or Secure Shell (SSH) client (Putty)</a></li>
+</ul>
+
+<h3 id="manuals">Manuals</h3>
+<ul>
+  <li><a href="http://www.gnu.org/manual/manual.html">GNU manuals</a></li>
+  <li><a href="http://www.gnu.org/software/coreutils/manual/coreutils.html">Core GNU utilities</a></li>
+</ul>
+
+<h3 id="miscellaneous">Miscellaneous</h3>
+<ul>
+  <li><a href="http://en.wikipedia.org/wiki/North_Pacific_Gyre">North Pacific Gyre</a></li>
+  <li><a href="http://en.wikipedia.org/wiki/Great_Pacific_Garbage_Patch">Great Pacific Garbage Patch</a></li>
+  <li><a href="http://www.clir.org/pubs/archives/ensuring.pdf">‘Ensuring the longevity of digital information’ by Jeff Rothenberg</a></li>
+  <li><a href="http://wiki.c2.com/?ComputerErrorHaiku">Computer error haikus</a></li>
+</ul>
+:ET
