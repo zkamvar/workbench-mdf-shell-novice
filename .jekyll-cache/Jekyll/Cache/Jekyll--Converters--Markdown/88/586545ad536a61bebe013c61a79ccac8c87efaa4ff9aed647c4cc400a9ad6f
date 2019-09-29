@@ -1,0 +1,2 @@
+I"Ø<p><code class="highlighter-rouge">*</code> matches zero or more characters in a filename, so <code class="highlighter-rouge">*.txt</code> matches all files ending in <code class="highlighter-rouge">.txt</code>.</p>
+:ET

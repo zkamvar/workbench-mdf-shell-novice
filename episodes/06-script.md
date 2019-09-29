@@ -26,6 +26,81 @@ a bunch of commands saved in a file is usually called a **shell script**,
 but make no mistake:
 these are actually small programs.
 
+
+>## Script File Format
+{: .callout}
+
+~~~
+$ nano myscript.sh
+~~~
+{: .language-bash}
+
+~~~
+#!/bin/bash
+# This is our first script
+echo "Hello world!" # This is a comment too
+~~~
+{: .source}
+
+
+>## Comments
+>Comments start with the symbol #. Anything after the # is not get executed.
+>
+{: .callout}
+
+Then we save the file (`Ctrl-O` in nano), and exit the text editor (`Ctrl-X` in nano).
+
+Once we have saved the file,
+we need to change the file permission to execute. This
+is done using chmod as:
+
+~~~
+$ chmod +x myscript.sh
+~~~
+Now, we run the following command:
+~~~
+$ ./myscript.sh
+~~~
+
+>## Varaibles
+> A variable is a placeholder for the data. In shell script, variables are as
+>* varibleName=variable value (**Note: No spaces on either side of the = sign**).
+>* While calling the varible, `$` sign must be called before the variable name.
+{: .callout}
+
+~~~
+#!/bin/bash
+
+name="John" # no spaces on either side of the = sign
+echo Hello $name 
+~~~
+{: .source}
+
+~~~
+$ ./variable.sh
+Hello John
+~~~
+{: .language-bash}
+
+>## Command as Variable
+> It is also possible to save the output of a command to a variable and this is
+>done using the backtick(`).
+{: .callout}
+~~~
+#!/bin/bash
+
+name="John" # no spaces on either side of the = sign
+echo Hello $name 
+
+now=`date`
+echo now
+~~~
+{: .source}
+
+
+
+
+
 Let's start by going back to `molecules/` and creating a new file, `middle.sh` which will
 become our shell script:
 
@@ -41,6 +116,7 @@ If the file does not exist, it will be created.
 We can use the text editor to directly edit the file -- we'll simply insert the following line:
 
 ~~~
+#!/bin/bash
 head -n 15 octane.pdb | tail -n 5
 ~~~
 {: .source}
@@ -55,12 +131,20 @@ Then we save the file (`Ctrl-O` in nano),
 Check that the directory `molecules` now contains a file called `middle.sh`.
 
 Once we have saved the file,
-we can ask the shell to execute the commands it contains.
-Our shell is called `bash`, so we run the following command:
+we need to change the file permission to execute. This
+is done using chmod as:
 
 ~~~
-$ bash middle.sh
+chmod +x middle.sh
 ~~~
+
+Now, we can ask the shell to execute the commands it contains.
+so we run the following command:
+
+~~~ {.bash}
+$ ./middle.sh
+~~~
+
 {: .language-bash}
 
 ~~~
@@ -88,6 +172,9 @@ our script's output is exactly what we would get if we ran that pipeline directl
 > text editor, or be careful to save files as plain text.
 {: .callout}
 
+
+
+In the above script, we have selected 11-15 line from the octane.pdb.
 What if we want to select lines from an arbitrary file?
 We could edit `middle.sh` each time to change the filename,
 but that would probably take longer than typing the command out again
@@ -102,16 +189,30 @@ $ nano middle.sh
 Now, within "nano", replace the text `octane.pdb` with the special variable called `$1`:
 
 ~~~
-head -n 15 "$1" | tail -n 5
+#!/bin/bash
+head -n 15 "$1" | tail -n 5  # octane.pdb -> $1
 ~~~
 {: .output}
 
 Inside a shell script,
 `$1` means 'the first filename (or other argument) on the command line'.
+
+
+>## Command line arguments
+>* `$0`: The name of the scrip.
+>* `$1`-`$9`:`$1` is the first argument, `$2` is the second and so on.
+>* `$#`: How many command line arguments were given to the script.
+>* `$*`:  All of the command line arguments.
+{: .callout}
+
+
+
+
 We can now run our script like this:
 
+
 ~~~
-$ bash middle.sh octane.pdb
+$ ./middle.sh octane.pdb
 ~~~
 {: .language-bash}
 
@@ -127,7 +228,7 @@ ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00
 or on a different file like this:
 
 ~~~
-$ bash middle.sh pentane.pdb
+$ ./middle.sh pentane.pdb
 ~~~
 {: .language-bash}
 
@@ -158,14 +259,18 @@ $ nano middle.sh
 {: .language-bash}
 
 ~~~
-head -n "$2" "$1" | tail -n "$3"
+#!/bin/bash
+
+# head -n 15 octane.pdb | tail -n 5
+
+head -n "$2" "$1" | tail -n "$3"  # $1 = filename,   line-range=($2-$3) to $2
 ~~~
 {: .output}
 
 We can now run:
 
 ~~~
-$ bash middle.sh pentane.pdb 15 5
+$ ./middle.sh pentane.pdb 15 5
 ~~~
 {: .language-bash}
 
@@ -205,6 +310,8 @@ $ nano middle.sh
 {: .language-bash}
 
 ~~~
+#!/bin/bash
+
 # Select lines from the middle of a file.
 # Usage: bash middle.sh filename end_line num_lines
 head -n "$2" "$1" | tail -n "$3"
@@ -249,6 +356,7 @@ $ nano sorted.sh
 {: .language-bash}
 
 ~~~
+#!/bin/bash
 # Sort files by their length.
 # Usage: bash sorted.sh one_or_more_filenames
 wc -l "$@" | sort -n
@@ -316,6 +424,7 @@ $ bash sorted.sh *.pdb ../creatures/*.dat
 {: .challenge}
 
 
+<!---
 Suppose we have just run a series of commands that did something useful --- for example,
 that created a graph we'd like to use in a paper.
 We'd like to be able to re-create the graph later if we need to,
@@ -374,6 +483,8 @@ what they discover about their data and their workflow with one call to `history
 and a bit of editing to clean up the output
 and save it as a shell script.
 
+-->
+
 ## Nelle's Pipeline: Creating a Script
 
 
@@ -385,9 +496,11 @@ $ cd ../north-pacific-gyre/2012-07-03/
 ```
 {: .language-bash}
 
+
 She runs the editor and writes the following:
 
 ~~~
+#!/bin/bash
 # Calculate stats for data files.
 for datafile in "$@"
 do
@@ -401,14 +514,15 @@ She saves this in a file called `do-stats.sh`
 so that she can now re-do the first stage of her analysis by typing:
 
 ~~~
-$ bash do-stats.sh NENE*[AB].txt
+$ chmod + x do-stats.sh
+$ ./do-stats.sh NENE*[AB].txt
 ~~~
 {: .language-bash}
 
 She can also do this:
 
 ~~~
-$ bash do-stats.sh NENE*[AB].txt | wc -l
+$ ./do-stats.sh NENE*[AB].txt | wc -l
 ~~~
 {: .language-bash}
 
@@ -420,6 +534,7 @@ it lets the person running it decide what files to process.
 She could have written it as:
 
 ~~~
+#!/bin/bash
 # Calculate stats for Site A and Site B data files.
 for datafile in NENE*[AB].txt
 do
@@ -439,6 +554,8 @@ If she wanted to be more adventurous,
 she could modify her script to check for command-line arguments,
 and use `NENE*[AB].txt` if none were provided.
 Of course, this introduces another tradeoff between flexibility and complexity.
+
+
 
 > ## Variables in Shell Scripts
 >
