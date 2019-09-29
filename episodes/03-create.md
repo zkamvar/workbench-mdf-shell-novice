@@ -40,12 +40,12 @@ $ pwd
 {: .output}
 
 ~~~
-$ ls -F
+$ ls 
 ~~~
 {: .language-bash}
 
 ~~~
-creatures/  data/  molecules/  north-pacific-gyre/  notes.txt  pizza.cfg  solar.pdf  writing/
+creatures  data  molecules  north-pacific-gyre  notes.txt  pizza.cfg  solar.pdf  writing
 ~~~
 {: .output}
 
@@ -66,12 +66,12 @@ Since `thesis` is a relative path
 the new directory is created in the current working directory:
 
 ~~~
-$ ls -F
+$ ls 
 ~~~
 {: .language-bash}
 
 ~~~
-creatures/  data/  molecules/  north-pacific-gyre/  notes.txt  pizza.cfg  solar.pdf  thesis/  writing/
+creatures  data  molecules  north-pacific-gyre  notes.txt  pizza.cfg  solar.pdf  thesis  writing
 ~~~
 {: .output}
 
@@ -114,7 +114,7 @@ creatures/  data/  molecules/  north-pacific-gyre/  notes.txt  pizza.cfg  solar.
 Since we've just created the `thesis` directory, there's nothing in it yet:
 
 ~~~
-$ ls -F thesis
+$ ls thesis
 ~~~
 {: .language-bash}
 
@@ -261,7 +261,7 @@ draft.txt
 Returning to the `data-shell` directory,
 
 ```
-cd ~/Desktop/data-shell/
+cd data-shell
 ```
 {: .language-bash}
 
@@ -342,11 +342,11 @@ quotes.txt
 > Jamie realizes that she put the files `sucrose.dat` and `maltose.dat` into the wrong folder:
 >
 > ~~~
-> $ ls -F
->  analyzed/ raw/
-> $ ls -F analyzed
+> $ ls 
+>  analyzed raw
+> $ ls analyzed
 > fructose.dat glucose.dat maltose.dat sucrose.dat
-> $ cd raw/
+> $ cd raw
 > ~~~
 > {: .language-bash}
 >
@@ -582,11 +582,11 @@ Oftentimes one needs to copy or move several files at once. This can be done by 
 > In the example below, what does `cp` do when given three or more file names?
 >
 > ~~~
-> $ ls -F
+> $ ls 
 > ~~~
 > {: .language-bash}
 > ~~~
-> amino-acids.txt  animals.txt  backup/  elements/  morse.txt  pdb/  planets.txt  salmon.txt  sunspot.txt
+> amino-acids.txt  animals.txt  backup  elements  morse.txt  pdb  planets.txt  salmon.txt  sunspot.txt
 > ~~~
 > {: .output}
 > ~~~
@@ -769,11 +769,11 @@ Oftentimes one needs to copy or move several files at once. This can be done by 
 > organized:
 >
 > ~~~
-> $ ls -F
+> $ ls 
 > ~~~
 > {: .language-bash}
 > ~~~
-> analyzed/  fructose.dat    raw/   sucrose.dat
+> analyzed  fructose.dat    raw   sucrose.dat
 > ~~~
 > {: .output}
 >
@@ -782,7 +782,7 @@ Oftentimes one needs to copy or move several files at once. This can be done by 
 > produce the output shown?
 >
 > ~~~
-> $ ls -F
+> $ ls 
 > ~~~
 > {: .language-bash}
 > ~~~
