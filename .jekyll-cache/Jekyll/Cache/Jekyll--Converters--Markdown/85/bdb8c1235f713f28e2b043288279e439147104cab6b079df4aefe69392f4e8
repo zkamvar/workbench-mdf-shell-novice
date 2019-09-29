@@ -1,0 +1,85 @@
+I"<<p>You need to download some files to follow this lesson:</p>
+<ol class="language-bash">
+  <li>Open a terminal and type the following command to download the file.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://monashdatafluency.github.io/shell-novice/data/data-shell.zip
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<ol class="language-bash">
+  <li>Extract the zip file using command:
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unzip data-shell.zip
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<ol>
+  <li>Download <a href="./data/data-shell.zip">data-shell.zip</a> and move the file to your home directory.</li>
+  <li>Unzip/extract the file (ask your instructor if you need help with this step). You should end up with a new folder called <strong>data-shell</strong> on your Desktop.</li>
+  <li>Open a terminal and type <code class="highlighter-rouge">cd</code>, then press the Enter key. That last step will make sure you start with your home folder as your working directory.</li>
+</ol>
+
+<p>In the lesson, you will find out how to access the data in this folder.</p>
+
+<blockquote class="callout">
+  <h2 id="where-to-type-commands-how-to-open-a-new-shell">Where to type commands: How to open a new shell</h2>
+  <p>The shell is a program that enables us to send commands to the computer and receive output. It is also referred to as the terminal or command line.</p>
+
+  <p>Some computers include a default Unix Shell program. 
+The steps below describe some methods for identifying and opening a Unix Shell program if you already have one installed. 
+There are also options for identifying and downloading a Unix Shell program, a Linux/UNIX emulator, or a program to access a Unix Shell on a server.</p>
+
+  <p>If none of the options below address your circumstances, try an online search for: Unix shell [your computer model] [your operating system].</p>
+
+  <h3 id="linux">Linux</h3>
+  <p>The default Unix Shell for Linux operating systems is usually Bash.
+On most versions of Linux, it is accessible by running the <a href="https://help.gnome.org/users/gnome-terminal/stable/">(Gnome) Terminal</a>
+or <a href="https://konsole.kde.org/">(KDE) Konsole</a>
+or <a href="https://en.wikipedia.org/wiki/Xterm">xterm</a>,
+which can be found via the applications menu or the search bar.
+If your machine is set up to use something other than bash, you can run it by opening a terminal and typing <code class="highlighter-rouge">bash</code>.</p>
+
+  <h3 id="mac-os">Mac OS</h3>
+  <p>For a Mac computer, the default Unix Shell is Bash,
+and it is available via the Terminal Utilities program within your Applications folder.</p>
+
+  <p>To open Terminal, try one or both of the following:</p>
+  <ul>
+    <li>Go to your Applications. Within Applications, open the Utilities folder. Locate Terminal in the Utilities folder and open it.</li>
+    <li>Use the Mac ‘Spotlight’ computer search function. Search for: <code class="highlighter-rouge">Terminal</code> and press <kbd>Return</kbd>.</li>
+  </ul>
+
+  <h4 id="reference">Reference</h4>
+  <p><a href="http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/">How to Use Terminal on a Mac</a></p>
+
+  <h3 id="windows">Windows</h3>
+  <p>Computers with Windows operating systems do not automatically have a Unix Shell program installed.
+In this lesson, we encourage you to use an emulator included in Git for Windows, 
+which gives you access to both Bash shell commands and Git. 
+If you are attending a Software Carpentry workshop session, it is likely you have already received instructions on how to install Git for Windows.</p>
+
+  <p>Once installed, you can open a terminal by running the program Git Bash from the Windows start menu.</p>
+
+  <p>Other solutions are available for running Bash commands on Windows. 
+There is now a Bash shell command-line tool available for Windows 10. 
+Additionally, you can run Bash commands on a remote computer or server that already has a Unix Shell, from your Windows machine. 
+This can usually be done through a Secure Shell (SSH) client. 
+One such client available for free for Windows computers is PuTTY. 
+See the reference below for information on installing and using PuTTY, 
+using the Windows 10 command-line tool, or installing and using a Unix/Linux emulator.</p>
+
+  <h4 id="reference-1">Reference</h4>
+  <ul>
+    <li><a href="https://git-for-windows.github.io/">Git for Windows</a> - <em>Recommended</em></li>
+  </ul>
+
+  <h3 id="for-advanced-users-you-may-choose-one-of-the-following-alternatives">For advanced users, you may choose one of the following alternatives:</h3>
+  <ul>
+    <li><a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Install the Windows Subsystem for Linux</a></li>
+    <li><a href="http://faculty.smu.edu/reynolds/unixtut/windows.html">Using a Unix/Linux emulator (Cygwin) or Secure Shell (SSH) client (Putty)</a></li>
+  </ul>
+</blockquote>
+<blockquote>
+  <p>*Please note that commands in the Windows Subsystem for Linux (WSL) or Cygwin may differ slightly from those shown in the lesson or presented in the workshop.</p>
+</blockquote>
+:ET

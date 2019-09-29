@@ -128,25 +128,17 @@ $ ls
 
 ~~~
 Applications Documents    Library      Music        Public
-Desktop      Downloads    Movies       Pictures
+Desktop      Downloads    Movies       Pictures     data-shell
 ~~~
 {: .output}
 
-(Again, your results may be slightly different depending on your operating
-system and how you have customized your filesystem.)
-
-`ls` prints the names of the files and directories in the current directory.
-We can make its output more comprehensible by using the `-F` **option**
-(also known as a **switch** or a **flag**) ,
-which tells `ls` to classify the output
-by adding a marker to file and directory names to indicate what they are:
+Most of the operating system gives color output for the `ls` command. Directories,
+files, executables can be easiliy differentiable based on their color. In case
+your are getting color output for `ls` command then add a flaf `-F` to `ls`. This will
+add a trailing at the end of the output names:
 - a trailing `/` indicates that this is a directory
 - `@` indicates a link
 - `*` indicates an executable
-
-Depending on your default options,
-the shell might also use colors to indicate whether each entry is a file or
-directory.
 
 ~~~
 $ ls -F
@@ -155,19 +147,29 @@ $ ls -F
 
 ~~~
 Applications/ Documents/    Library/      Music/        Public/
-Desktop/      Downloads/    Movies/       Pictures/
+Desktop/      Downloads/    Movies/       Pictures/     data-shell/
 ~~~
 {: .output}
 
 Here,
 we can see that our home directory contains mostly **sub-directories**.
 Any names in your output that don't have a classification symbol,
-are plain old **files**.
+are plain old **files** or **executables**.
+
 
 
 ## General syntax of a shell command
 Consider the command below as a general example of a command,
 which we will dissect into its component parts:
+
+~~~
+$ ls [-OPTION] [FILE] 
+~~~
+{: .language-bash}
+
+By default, FILE is the current director, However, once can specify the path to
+directory we want to see the content, Let's say we want to see the content of
+the `/` director:
 
 ~~~
 $ ls -F /
@@ -194,7 +196,7 @@ An example of the output you might get from the above command is given below:
 
 ~~~
 $ ls -F /
-Applications/         System/
+Applications/         System/    
 Library/              Users/
 Network/              Volumes/
 ~~~
@@ -440,25 +442,17 @@ To **quit** the `man` pages, press <kbd>Q</kbd>.
 
 
 We can also use `ls` to see the contents of a different directory.  Let's take a
-look at our `Desktop` directory by running `ls -F Desktop`,
+look at our `data-shell` directory by typing `ls data-shell`,
 i.e.,
-the command `ls` with the `-F` **option** and the **argument**  `Desktop`.
-The argument `Desktop` tells `ls` that
 we want a listing of something other than our current working directory:
 
 ~~~
-$ ls -F Desktop
-~~~
-{: .language-bash}
-
-~~~
-data-shell/
+ls data-shell/
 ~~~
 {: .output}
 
-Your output should be a list of all the files and sub-directories on your
-Desktop, including the `data-shell` directory you downloaded at
-the [setup for this lesson]({{ page.root }}{% link setup.md %}).  Take a look at your Desktop to confirm that
+Your output should be a list of all the files in the `data-shell` directory you downloaded at
+the [setup for this lesson]({{ page.root }}{% link setup.md %}).  Take a look at your Home to confirm that
 your output is accurate.
 
 As you may now see, using a bash shell is strongly dependent on the idea that
@@ -468,26 +462,30 @@ it's possible to put hundreds of files in our home directory,
 just as it's possible to pile hundreds of printed papers on our desk,
 but it's a self-defeating strategy.
 
-Now that we know the `data-shell` directory is located on our Desktop, we
+Now that we know the `data-shell` directory is located in our home directory, we
 can do two things.
 
 First, we can look at its contents, using the same strategy as before, passing
 a directory name to `ls`:
 
 ~~~
-$ ls -F Desktop/data-shell
+$ ls data-shell
 ~~~
 {: .language-bash}
 
 ~~~
-creatures/          molecules/          notes.txt           solar.pdf
-data/               north-pacific-gyre/ pizza.cfg           writing/
+creatures          molecules          notes.txt           solar.pdf
+data               north-pacific-gyre pizza.cfg           writing
 ~~~
 {: .output}
+
+
 
 Second, we can actually change our location to a different directory, so
 we are no longer located in
 our home directory.
+
+### Changing Directory: cd
 
 The command to change locations is `cd` followed by a
 directory name to change our working directory.
@@ -496,21 +494,24 @@ which is a bit misleading:
 the command doesn't change the directory,
 it changes the shell's idea of what directory we are in.
 
+
 Let's say we want to move to the `data` directory we saw above.  We can
 use the following series of commands to get there:
 
 ~~~
-$ cd Desktop
 $ cd data-shell
 $ cd data
 ~~~
 {: .language-bash}
 
-These commands will move us from our home directory onto our Desktop, then into
-the `data-shell` directory, then into the `data` directory.  You will notice that `cd` doesn't print anything.  This is normal.  Many shell commands will not output anything to the screen when successfully executed.  But if we run `pwd` after it, we can see that we are now
-in `/Users/nelle/Desktop/data-shell/data`.
+These commands will move us from our home directory into
+the `data-shell` directory, then into the `data` directory.  You will notice 
+that `cd` doesn't print anything.  This is normal.  Many shell commands 
+will not output anything to the screen when successfully executed.  
+But if we run `pwd` after it, we can see that we are now
+in `/Users/nelle/data-shell/data`.
 If we run `ls` without arguments now,
-it lists the contents of `/Users/nelle/Desktop/data-shell/data`,
+it lists the contents of `/Users/nelle/data-shell/data`,
 because that's where we now are:
 
 ~~~
@@ -519,18 +520,18 @@ $ pwd
 {: .language-bash}
 
 ~~~
-/Users/nelle/Desktop/data-shell/data
+/Users/nelle/data-shell/data
 ~~~
 {: .output}
 
 ~~~
-$ ls -F
+$ ls 
 ~~~
 {: .language-bash}
 
 ~~~
-amino-acids.txt   elements/     pdb/	        salmon.txt
-animals.txt       morse.txt     planets.txt     sunspot.txt
+amino-acids.txt   elements     pdb	        salmon.txt
+animals.txt       morse.txt    planets.txt  sunspot.txt
 ~~~
 {: .output}
 
@@ -567,7 +568,7 @@ $ cd ..
 or more succinctly,
 the **parent** of the current directory.
 Sure enough,
-if we run `pwd` after running `cd ..`, we're back in `/Users/nelle/Desktop/data-shell`:
+if we run `pwd` after running `cd ..`, we're back in `/Users/nelle/data-shell`:
 
 ~~~
 $ pwd
@@ -575,7 +576,7 @@ $ pwd
 {: .language-bash}
 
 ~~~
-/Users/nelle/Desktop/data-shell
+/Users/nelle/data-shell
 ~~~
 {: .output}
 
@@ -660,7 +661,7 @@ three commands, but we can actually string together the list of directories
 to move to `data` in one step:
 
 ~~~
-$ cd Desktop/data-shell/data
+$ cd data-shell/data
 ~~~
 {: .language-bash}
 
@@ -692,12 +693,12 @@ $ pwd
 {: .language-bash}
 
 ~~~
-/Users/nelle/Desktop/data-shell/data
+/Users/nelle/data-shell/data
 ~~~
 {: .output}
 
 ~~~
-$ cd /Users/nelle/Desktop/data-shell
+$ cd /Users/nelle/data-shell
 ~~~
 {: .language-bash}
 

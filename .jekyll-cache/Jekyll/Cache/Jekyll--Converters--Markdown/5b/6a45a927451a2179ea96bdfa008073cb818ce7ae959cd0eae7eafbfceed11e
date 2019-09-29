@@ -1,4 +1,4 @@
-I"+�<p>The part of the operating system responsible for managing files and directories
+I"��<p>The part of the operating system responsible for managing files and directories
 is called the <strong>file system</strong>.
 It organizes our data into files,
 which hold information,
@@ -96,42 +96,41 @@ which stands for ‘listing’:</p>
 </code></pre></div></div>
 
 <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Applications Documents    Library      Music        Public
-Desktop      Downloads    Movies       Pictures
+Desktop      Downloads    Movies       Pictures     data-shell
 </code></pre></div></div>
 
-<p>(Again, your results may be slightly different depending on your operating
-system and how you have customized your filesystem.)</p>
-
-<p><code class="highlighter-rouge">ls</code> prints the names of the files and directories in the current directory.
-We can make its output more comprehensible by using the <code class="highlighter-rouge">-F</code> <strong>option</strong>
-(also known as a <strong>switch</strong> or a <strong>flag</strong>) ,
-which tells <code class="highlighter-rouge">ls</code> to classify the output
-by adding a marker to file and directory names to indicate what they are:</p>
+<p>Most of the operating system gives color output for the <code class="highlighter-rouge">ls</code> command. Directories,
+files, executables can be easiliy differentiable based on their color. In case
+your are getting color output for <code class="highlighter-rouge">ls</code> command then add a flaf <code class="highlighter-rouge">-F</code> to <code class="highlighter-rouge">ls</code>. This will
+add a trailing at the end of the output names:</p>
 <ul>
   <li>a trailing <code class="highlighter-rouge">/</code> indicates that this is a directory</li>
   <li><code class="highlighter-rouge">@</code> indicates a link</li>
   <li><code class="highlighter-rouge">*</code> indicates an executable</li>
 </ul>
 
-<p>Depending on your default options,
-the shell might also use colors to indicate whether each entry is a file or
-directory.</p>
-
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-F</span>
 </code></pre></div></div>
 
 <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Applications/ Documents/    Library/      Music/        Public/
-Desktop/      Downloads/    Movies/       Pictures/
+Desktop/      Downloads/    Movies/       Pictures/     data-shell/
 </code></pre></div></div>
 
 <p>Here,
 we can see that our home directory contains mostly <strong>sub-directories</strong>.
 Any names in your output that don’t have a classification symbol,
-are plain old <strong>files</strong>.</p>
+are plain old <strong>files</strong> or <strong>executables</strong>.</p>
 
 <h2 id="general-syntax-of-a-shell-command">General syntax of a shell command</h2>
 <p>Consider the command below as a general example of a command,
 which we will dissect into its component parts:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls</span> <span class="o">[</span><span class="nt">-OPTION</span><span class="o">]</span> <span class="o">[</span>FILE] 
+</code></pre></div></div>
+
+<p>By default, FILE is the current director, However, once can specify the path to
+directory we want to see the content, Let’s say we want to see the content of
+the <code class="highlighter-rouge">/</code> director:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-F</span> /
 </code></pre></div></div>
@@ -154,7 +153,7 @@ of files and directories in the root directory <code class="highlighter-rouge">/
 An example of the output you might get from the above command is given below:</p>
 
 <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls -F /
-Applications/         System/
+Applications/         System/    
 Library/              Users/
 Network/              Volumes/
 </code></pre></div></div>
@@ -392,21 +391,15 @@ see if a new output file was written.</p>
 </blockquote>
 
 <p>We can also use <code class="highlighter-rouge">ls</code> to see the contents of a different directory.  Let’s take a
-look at our <code class="highlighter-rouge">Desktop</code> directory by running <code class="highlighter-rouge">ls -F Desktop</code>,
+look at our <code class="highlighter-rouge">data-shell</code> directory by typing <code class="highlighter-rouge">ls data-shell</code>,
 i.e.,
-the command <code class="highlighter-rouge">ls</code> with the <code class="highlighter-rouge">-F</code> <strong>option</strong> and the <strong>argument</strong>  <code class="highlighter-rouge">Desktop</code>.
-The argument <code class="highlighter-rouge">Desktop</code> tells <code class="highlighter-rouge">ls</code> that
 we want a listing of something other than our current working directory:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-F</span> Desktop
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls data-shell/
 </code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data-shell/
-</code></pre></div></div>
-
-<p>Your output should be a list of all the files and sub-directories on your
-Desktop, including the <code class="highlighter-rouge">data-shell</code> directory you downloaded at
-the <a href="../shell-novice/setup.html">setup for this lesson</a>.  Take a look at your Desktop to confirm that
+<p>Your output should be a list of all the files in the <code class="highlighter-rouge">data-shell</code> directory you downloaded at
+the <a href="../shell-novice/setup.html">setup for this lesson</a>.  Take a look at your Home to confirm that
 your output is accurate.</p>
 
 <p>As you may now see, using a bash shell is strongly dependent on the idea that
@@ -416,22 +409,24 @@ it’s possible to put hundreds of files in our home directory,
 just as it’s possible to pile hundreds of printed papers on our desk,
 but it’s a self-defeating strategy.</p>
 
-<p>Now that we know the <code class="highlighter-rouge">data-shell</code> directory is located on our Desktop, we
+<p>Now that we know the <code class="highlighter-rouge">data-shell</code> directory is located in our home directory, we
 can do two things.</p>
 
 <p>First, we can look at its contents, using the same strategy as before, passing
 a directory name to <code class="highlighter-rouge">ls</code>:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-F</span> Desktop/data-shell
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls </span>data-shell
 </code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>creatures/          molecules/          notes.txt           solar.pdf
-data/               north-pacific-gyre/ pizza.cfg           writing/
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>creatures          molecules          notes.txt           solar.pdf
+data               north-pacific-gyre pizza.cfg           writing
 </code></pre></div></div>
 
 <p>Second, we can actually change our location to a different directory, so
 we are no longer located in
 our home directory.</p>
+
+<h3 id="changing-directory-cd">Changing Directory: cd</h3>
 
 <p>The command to change locations is <code class="highlighter-rouge">cd</code> followed by a
 directory name to change our working directory.
@@ -443,29 +438,31 @@ it changes the shell’s idea of what directory we are in.</p>
 <p>Let’s say we want to move to the <code class="highlighter-rouge">data</code> directory we saw above.  We can
 use the following series of commands to get there:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>Desktop
-<span class="nv">$ </span><span class="nb">cd </span>data-shell
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>data-shell
 <span class="nv">$ </span><span class="nb">cd </span>data
 </code></pre></div></div>
 
-<p>These commands will move us from our home directory onto our Desktop, then into
-the <code class="highlighter-rouge">data-shell</code> directory, then into the <code class="highlighter-rouge">data</code> directory.  You will notice that <code class="highlighter-rouge">cd</code> doesn’t print anything.  This is normal.  Many shell commands will not output anything to the screen when successfully executed.  But if we run <code class="highlighter-rouge">pwd</code> after it, we can see that we are now
-in <code class="highlighter-rouge">/Users/nelle/Desktop/data-shell/data</code>.
+<p>These commands will move us from our home directory into
+the <code class="highlighter-rouge">data-shell</code> directory, then into the <code class="highlighter-rouge">data</code> directory.  You will notice 
+that <code class="highlighter-rouge">cd</code> doesn’t print anything.  This is normal.  Many shell commands 
+will not output anything to the screen when successfully executed.<br />
+But if we run <code class="highlighter-rouge">pwd</code> after it, we can see that we are now
+in <code class="highlighter-rouge">/Users/nelle/data-shell/data</code>.
 If we run <code class="highlighter-rouge">ls</code> without arguments now,
-it lists the contents of <code class="highlighter-rouge">/Users/nelle/Desktop/data-shell/data</code>,
+it lists the contents of <code class="highlighter-rouge">/Users/nelle/data-shell/data</code>,
 because that’s where we now are:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">pwd</span>
 </code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/nelle/Desktop/data-shell/data
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/nelle/data-shell/data
 </code></pre></div></div>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-F</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls</span> 
 </code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>amino-acids.txt   elements/     pdb/	        salmon.txt
-animals.txt       morse.txt     planets.txt     sunspot.txt
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>amino-acids.txt   elements     pdb	        salmon.txt
+animals.txt       morse.txt    planets.txt  sunspot.txt
 </code></pre></div></div>
 
 <p>We now know how to go down the directory tree, but
@@ -495,12 +492,12 @@ that looks like this:</p>
 or more succinctly,
 the <strong>parent</strong> of the current directory.
 Sure enough,
-if we run <code class="highlighter-rouge">pwd</code> after running <code class="highlighter-rouge">cd ..</code>, we’re back in <code class="highlighter-rouge">/Users/nelle/Desktop/data-shell</code>:</p>
+if we run <code class="highlighter-rouge">pwd</code> after running <code class="highlighter-rouge">cd ..</code>, we’re back in <code class="highlighter-rouge">/Users/nelle/data-shell</code>:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">pwd</span>
 </code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/nelle/Desktop/data-shell
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/nelle/data-shell
 </code></pre></div></div>
 
 <p>The special directory <code class="highlighter-rouge">..</code> doesn’t usually show up when we run <code class="highlighter-rouge">ls</code>.  If we want
@@ -575,7 +572,7 @@ which is great if you’ve gotten lost in your own filesystem.</p>
 three commands, but we can actually string together the list of directories
 to move to <code class="highlighter-rouge">data</code> in one step:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>Desktop/data-shell/data
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>data-shell/data
 </code></pre></div></div>
 
 <p>Check that we’ve moved to the right place by running <code class="highlighter-rouge">pwd</code> and <code class="highlighter-rouge">ls -F</code></p>
@@ -603,10 +600,10 @@ to move to <code class="highlighter-rouge">data-shell</code>.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">pwd</span>
 </code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/nelle/Desktop/data-shell/data
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/nelle/data-shell/data
 </code></pre></div></div>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> /Users/nelle/Desktop/data-shell
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> /Users/nelle/data-shell
 </code></pre></div></div>
 
 <p>Run <code class="highlighter-rouge">pwd</code> and <code class="highlighter-rouge">ls -F</code> to ensure that we’re in the directory we expect.</p>

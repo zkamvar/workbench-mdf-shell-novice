@@ -1,15 +1,15 @@
-I")´<h2 id="creating-directories">Creating directories</h2>
+I"/´<h2 id="creating-directories">Creating directories</h2>
 <p>We now know how to explore files and directories,
 but how do we create them in the first place?</p>
 
 <h3 id="step-one-see-where-we-are-and-what-we-already-have">Step one: see where we are and what we already have</h3>
-<p>Letâ€™s go back to our <code class="highlighter-rouge">data-shell</code> directory on the Desktop
+<p>Letâ€™s go back to our <code class="highlighter-rouge">data-shell</code> directory on the Home directory
 and use <code class="highlighter-rouge">ls -F</code> to see what it contains:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">pwd</span>
 </code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/nelle/Desktop/data-shell
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/YourUserName/data-shell
 </code></pre></div></div>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-F</span>
