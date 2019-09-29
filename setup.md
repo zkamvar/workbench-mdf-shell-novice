@@ -4,13 +4,34 @@ title: Setup
 root: .
 ---
 
+## Downloading workshop data
+
 You need to download some files to follow this lesson:
 
-1. Download [data-shell.zip]({{ page.root }}/data/data-shell.zip) and move the file to your Desktop.
+### Using terminal
+
+- Open a terminal and type the following command to download the file.
+
+~~~
+$ wget https://monashdatafluency.github.io/shell-novice/data/data-shell.zip
+~~~
+{: .language-bash} 
+
+- Extract the zip file using command:
+
+~~~
+$ unzip data-shell.zip
+~~~
+{: .language-bash} 
+
+### Using Graphical Interface
+
+1. Download [data-shell.zip]({{ page.root }}/data/data-shell.zip) and move the file to your home directory.
 2. Unzip/extract the file (ask your instructor if you need help with this step). You should end up with a new folder called **data-shell** on your Desktop.
 3. Open a terminal and type `cd`, then press the Enter key. That last step will make sure you start with your home folder as your working directory.
 
 In the lesson, you will find out how to access the data in this folder.  
+{: .callout}
 
 > ## Where to type commands: How to open a new shell
 > The shell is a program that enables us to send commands to the computer and receive output. It is also referred to as the terminal or command line.
