@@ -55,7 +55,9 @@ done
 ```
 {: .language-bash}
 
-and we can apply this to our example like this:
+
+and we can apply this to our example. We want to extract the each species
+classification, i.e. the second line of the each file.
 
 ```
 $ for filename in basilisk.dat minotaur.dat unicorn.dat
@@ -128,34 +130,58 @@ possible to put the names into curly braces to clearly delimit the variable
 name: `$filename` is equivalent to `${filename}`, but is different from
 `${file}name`. You may find this notation in other people's programs.
 
+
+We run loop in terminal, which is quite handy when the loop is small. As the
+task inside the loop grows, it becomes hard to write/edit loop in the terminal.
+For example, if you try to make change to the last loop, by pressing up arrow
+key, all the text of the loop arranges in single line, that make hard make
+changes and it is more prone to error. So it is always good to write a script
+file.
+
+Let's create a shell-scrip named `classifiction.sh`:
+
+```
+#!/bin/bash
+
+for filename in basilisk.dat minotaur.dat unicorn.dat
+do
+   head -n 2 $filename | tail -n 1  # calling variable with $ symbol
+done
+```
+{: .language-bash}
+
+Here, filename is a variable, which keeps updating after each iteration.
+Let's run the:
+
+```
+#!/bin/bash
+$ chmod +x classification.sh
+$ ./classification.sh
+```
+{: .language-bash}
+
+
+
 We have called the variable in this loop `filename`
 in order to make its purpose clearer to human readers.
 The shell itself doesn't care what the variable is called;
 if we wrote this loop as:
 
-~~~
-$ for x in basilisk.dat minotaur.dat unicorn.dat
-> do
->    head -n 2 $x | tail -n 1
-> done
-~~~
-{: .language-bash}
+```
+#!/bin/bash
 
-or:
-
-~~~
-$ for temperature in basilisk.dat minotaur.dat unicorn.dat
-> do
->    head -n 2 $temperature | tail -n 1
-> done
-~~~
+for x in basilisk.dat minotaur.dat unicorn.dat
+do
+   head -n 2 $x | tail -n 1
+done
+```
 {: .language-bash}
 
 it would work exactly the same way.
 *Don't do this.*
 Programs are only useful if people can understand them,
-so meaningless names (like `x`) or misleading names (like `temperature`)
-increase the odds that the program won't do what its readers think it does.
+so meaningless names (like `x`) or misleading names increase the
+odds that the program won't do what its readers think it does.
 
 > ## Variables in Loops
 >
@@ -380,6 +406,7 @@ the `head` and `tail` combination selects lines 81-100
 from whatever file is being processed
 (assuming the file has at least 100 lines).
 
+
 > ## Spaces in Names
 >
 > Spaces are used to separate the elements of the list
@@ -397,10 +424,11 @@ from whatever file is being processed
 > To loop over these files, we would need to add double quotes like so:
 >
 > ~~~
-> $ for filename in "red dragon.dat" "purple unicorn.dat"
-> > do
-> >     head -n 100 "$filename" | tail -n 20
-> > done
+> #!/bin/bash
+> for filename in "red dragon.dat" "purple unicorn.dat"
+> do
+>      head -n 100 "$filename" | tail -n 20
+> done
 > ~~~
 > {: .language-bash}
 >
@@ -427,8 +455,10 @@ from whatever file is being processed
 > {: . output}
 {: .callout}
 
-We would like to modify each of the files in `data-shell/creatures`, but also save a version
-of the original files, naming the copies `original-basilisk.dat` and `original-unicorn.dat`.
+
+We would like to copy each of the files in `data-shell/creatures`, 
+naming the copies with prefix `original-`, i.e., `original-basilisk.dat` 
+and `original-unicorn.dat`.
 We can't use:
 
 ~~~
@@ -454,6 +484,7 @@ This problem arises when `cp` receives more than two inputs. When this happens, 
 expects the last input to be a directory where it can copy all the files it was passed.
 Since there is no directory named `original-*.dat` in the `creatures` directory we get an
 error.
+
 
 Instead, we can use a loop:
 ~~~
@@ -501,9 +532,9 @@ judicious use of `echo` is a good debugging technique.
 ![For Loop in Action](../fig/shell_script_for_loop_flow_chart.svg)
 
 ## Nelle's Pipeline: Processing Files
-
 Nelle is now ready to process her data files using `goostats` --- a shell script written by her supervisor.
 This calculates some statistics from a protein sample file, and takes two arguments:
+Nelle’s supervisor insisted that all her analytics must be reproducible. The easiest way to capture all the steps is in a script.
 
 1. an input file (containing the raw data)
 2. an output file (to store the calculated statistics)
@@ -515,10 +546,18 @@ these are ones whose names end in 'A' or 'B', rather than 'Z'. Starting from her
 
 ~~~
 $ cd north-pacific-gyre/2012-07-03
-$ for datafile in NENE*[AB].txt
-> do
->     echo $datafile
-> done
+~~~
+{: .language-bash}
+
+Let's create a new script file `do-stats.sh`:
+
+~~~
+#!/bin/bash
+# Calculate stats for Site A and Site B data files.
+for datafile in NENE*[AB].txt
+do
+     echo $datafile
+done
 ~~~
 {: .language-bash}
 
@@ -538,10 +577,11 @@ Prefixing each input file's name with 'stats' seems simple,
 so she modifies her loop to do that:
 
 ~~~
-$ for datafile in NENE*[AB].txt
-> do
->     echo $datafile stats-$datafile
-> done
+#!/bin/bash
+for datafile in NENE*[AB].txt
+do
+     echo $datafile stats-$datafile
+done
 ~~~
 {: .language-bash}
 
@@ -558,6 +598,7 @@ NENE02043B.txt stats-NENE02043B.txt
 She hasn't actually run `goostats` yet,
 but now she's sure she can select the right files and generate the right output filenames.
 
+<!--
 Typing in commands over and over again is becoming tedious,
 though,
 and Nelle is worried about making mistakes,
@@ -599,6 +640,17 @@ $ for datafile in NENE*[AB].txt; do echo $datafile; bash goostats $datafile stat
 > We can move to the beginning of a line in the shell by typing `Ctrl-a`
 > and to the end using `Ctrl-e`.
 {: .callout}
+-->
+
+~~~
+#!/bin/bash
+for datafile in NENE*[AB].txt
+do
+     echo "Processing $datafile..." # add a message for user
+     ./goostats $datafile stats-$datafile
+done
+~~~
+{: .language-bash}
 
 When she runs her program now,
 it produces one line of output every five seconds or so:
@@ -621,6 +673,29 @@ and uses `cat stats-NENE01729B.txt`
 to examine one of the output files.
 It looks good,
 so she decides to get some coffee and catch up on her reading.
+
+The above script can be easily modified to all the filles in a directory:
+
+~~~
+#!/bin/bash
+# Calculate stats for data files.
+for datafile in "$@"
+do
+    echo $datafile
+    bash goostats $datafile stats-$datafile
+done
+~~~
+{: .language-bash}
+
+
+The advantage is that this always selects the right files: she doesn’t have to 
+remember to exclude the ‘Z’ files. The disadvantage is that it always selects 
+just those files — she can’t run it on all files (including the ‘Z’ files), 
+or on the ‘G’ or ‘H’ files her colleagues in Antarctica are producing, without 
+editing the script. If she wanted to be more adventurous, she could modify her 
+script to check for command-line arguments, and use NENE*[AB].txt if none were 
+provided. Of course, this introduces another tradeoff between flexibility 
+and complexity.
 
 > ## Those Who Know History Can Choose to Repeat It
 >

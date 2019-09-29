@@ -1,0 +1,626 @@
+I"s~<p>We are finally ready to see what makes the shell such a powerful programming environment.
+We are going to take the commands we repeat frequently and save them in files
+so that we can re-run all those operations again later by typing a single command.
+For historical reasons,
+a bunch of commands saved in a file is usually called a <strong>shell script</strong>,
+but make no mistake:
+these are actually small programs.</p>
+
+<blockquote class="callout">
+  <h2 id="script-file-format">Script File Format</h2>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano myscript.sh
+</code></pre></div></div>
+
+<div class="source highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># This is our first script</span>
+<span class="nb">echo</span> <span class="s2">"Hello world!"</span> <span class="c"># This is a comment too</span>
+</code></pre></div></div>
+
+<blockquote class="callout">
+  <h2 id="comments">Comments</h2>
+  <p>Comments start with the symbol #. Anything after the # is not get executed.</p>
+
+</blockquote>
+
+<p>Then we save the file (<code class="highlighter-rouge">Ctrl-O</code> in nano), and exit the text editor (<code class="highlighter-rouge">Ctrl-X</code> in nano).</p>
+
+<p>Once we have saved the file,
+we need to change the file permission to execute. This
+is done using chmod as:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ chmod +x myscript.sh
+</code></pre></div></div>
+<p>Now, we run the following command:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./myscript.sh
+</code></pre></div></div>
+
+<blockquote class="callout">
+  <h2 id="variables">Variables</h2>
+  <p>A variable is a placeholder for the data. In shell script, variables are as</p>
+  <ul>
+    <li>variableName=variable value (<strong>Note: No spaces on either side of the = sign</strong>).</li>
+    <li>While calling the varible, <code class="highlighter-rouge">$</code> sign must be called before the variable name.</li>
+    <li>Variable can be also called using curely-bracket,<code class="highlighter-rouge">${}</code>.</li>
+  </ul>
+</blockquote>
+<div class="source highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">name</span><span class="o">=</span><span class="s2">"John"</span> <span class="c"># no spaces on either side of the = sign</span>
+<span class="nb">echo </span>Hello <span class="nv">$name</span> 
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./variable.sh
+Hello John
+</code></pre></div></div>
+
+<blockquote class="callout">
+  <h2 id="command-as-variable">Command as Variable</h2>
+  <p>It is also possible to save the output of a command to a variable and this is
+done using the backtick(`).</p>
+</blockquote>
+<div class="source highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">name</span><span class="o">=</span><span class="s2">"John"</span> <span class="c"># no spaces on either side of the = sign</span>
+<span class="nb">echo </span>Hello <span class="nv">$name</span> 
+
+<span class="nv">now</span><span class="o">=</span><span class="sb">`</span><span class="nb">date</span><span class="sb">`</span>
+<span class="nb">echo </span>now
+</code></pre></div></div>
+
+<p>Let’s start by going back to <code class="highlighter-rouge">molecules/</code> and creating a new file, <code class="highlighter-rouge">middle.sh</code> which will
+become our shell script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>molecules
+<span class="nv">$ </span>nano middle.sh
+</code></pre></div></div>
+
+<p>The command <code class="highlighter-rouge">nano middle.sh</code> opens the file <code class="highlighter-rouge">middle.sh</code> within the text editor ‘nano’
+(which runs within the shell).
+If the file does not exist, it will be created.
+We can use the text editor to directly edit the file – we’ll simply insert the following line:</p>
+
+<div class="source highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nb">head</span> <span class="nt">-n</span> 15 octane.pdb | <span class="nb">tail</span> <span class="nt">-n</span> 5
+</code></pre></div></div>
+
+<p>This is a variation on the pipe we constructed earlier:
+it selects lines 11-15 of the file <code class="highlighter-rouge">octane.pdb</code>.
+Remember, we are <em>not</em> running it as a command just yet:
+we are putting the commands in a file.</p>
+
+<p>Then we save the file (<code class="highlighter-rouge">Ctrl-O</code> in nano),
+ and exit the text editor (<code class="highlighter-rouge">Ctrl-X</code> in nano).
+Check that the directory <code class="highlighter-rouge">molecules</code> now contains a file called <code class="highlighter-rouge">middle.sh</code>.</p>
+
+<p>Once we have saved the file,
+we need to change the file permission to execute. This
+is done using chmod as:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x middle.sh
+</code></pre></div></div>
+
+<p>Now, we can ask the shell to execute the commands it contains.
+so we run the following command:</p>
+
+<pre><code class="language-{.bash}">$ ./middle.sh
+</code></pre>
+
+<div class="language-bash output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ATOM      9  H           1      <span class="nt">-4</span>.502   0.681   0.785  1.00  0.00
+ATOM     10  H           1      <span class="nt">-5</span>.254  <span class="nt">-0</span>.243  <span class="nt">-0</span>.537  1.00  0.00
+ATOM     11  H           1      <span class="nt">-4</span>.357   1.252  <span class="nt">-0</span>.895  1.00  0.00
+ATOM     12  H           1      <span class="nt">-3</span>.009  <span class="nt">-0</span>.741  <span class="nt">-1</span>.467  1.00  0.00
+ATOM     13  H           1      <span class="nt">-3</span>.172  <span class="nt">-1</span>.337   0.206  1.00  0.00
+</code></pre></div></div>
+
+<p>Sure enough,
+our script’s output is exactly what we would get if we ran that pipeline directly.</p>
+
+<blockquote class="callout">
+  <h2 id="text-vs-whatever">Text vs. Whatever</h2>
+
+  <p>We usually call programs like Microsoft Word or LibreOffice Writer “text
+editors”, but we need to be a bit more careful when it comes to
+programming. By default, Microsoft Word uses <code class="highlighter-rouge">.docx</code> files to store not
+only text, but also formatting information about fonts, headings, and so
+on. This extra information isn’t stored as characters, and doesn’t mean
+anything to tools like <code class="highlighter-rouge">head</code>: they expect input files to contain
+nothing but the letters, digits, and punctuation on a standard computer
+keyboard. When editing programs, therefore, you must either use a plain
+text editor, or be careful to save files as plain text.</p>
+</blockquote>
+
+<p>In the above script, we have selected 11-15 line from the octane.pdb.
+What if we want to select lines from an arbitrary file?
+We could edit <code class="highlighter-rouge">middle.sh</code> each time to change the filename,
+but that would probably take longer than typing the command out again
+in the shell and executing it with a new file name.
+Instead, let’s edit <code class="highlighter-rouge">middle.sh</code> and make it more versatile:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano middle.sh
+</code></pre></div></div>
+
+<p>Now, within “nano”, replace the text <code class="highlighter-rouge">octane.pdb</code> with the special variable called <code class="highlighter-rouge">$1</code>:</p>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nb">head</span> <span class="nt">-n</span> 15 <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> | <span class="nb">tail</span> <span class="nt">-n</span> 5  <span class="c"># octane.pdb -&gt; $1</span>
+</code></pre></div></div>
+
+<p>Inside a shell script,
+<code class="highlighter-rouge">$1</code> means ‘the first filename (or other argument) on the command line’.</p>
+
+<blockquote class="callout">
+  <h2 id="command-line-arguments">Command line arguments</h2>
+  <ul>
+    <li><code class="highlighter-rouge">$0</code>: The name of the scrip.</li>
+    <li><code class="highlighter-rouge">$1</code>-<code class="highlighter-rouge">$9</code>:<code class="highlighter-rouge">$1</code> is the first argument, <code class="highlighter-rouge">$2</code> is the second and so on.</li>
+    <li><code class="highlighter-rouge">$#</code>: How many command line arguments were given to the script.</li>
+    <li><code class="highlighter-rouge">$*</code>:  All of the command line arguments.</li>
+  </ul>
+</blockquote>
+
+<p>We can now run our script like this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./middle.sh octane.pdb
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ATOM      9  H           1      -4.502   0.681   0.785  1.00  0.00
+ATOM     10  H           1      -5.254  -0.243  -0.537  1.00  0.00
+ATOM     11  H           1      -4.357   1.252  -0.895  1.00  0.00
+ATOM     12  H           1      -3.009  -0.741  -1.467  1.00  0.00
+ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00
+</code></pre></div></div>
+
+<p>or on a different file like this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./middle.sh pentane.pdb
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ATOM      9  H           1       1.324   0.350  -1.332  1.00  0.00
+ATOM     10  H           1       1.271   1.378   0.122  1.00  0.00
+ATOM     11  H           1      -0.074  -0.384   1.288  1.00  0.00
+ATOM     12  H           1      -0.048  -1.362  -0.205  1.00  0.00
+ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00
+</code></pre></div></div>
+
+<blockquote class="callout">
+  <h2 id="double-quotes-around-arguments">Double-Quotes Around Arguments</h2>
+
+  <p>For the same reason that we put the loop variable inside double-quotes,
+in case the filename happens to contain any spaces,
+we surround <code class="highlighter-rouge">$1</code> with double-quotes.</p>
+</blockquote>
+
+<p>We still need to edit <code class="highlighter-rouge">middle.sh</code> each time we want to adjust the range of lines,
+though.
+Let’s fix that by using the special variables <code class="highlighter-rouge">$2</code> and <code class="highlighter-rouge">$3</code> for the
+number of lines to be passed to <code class="highlighter-rouge">head</code> and <code class="highlighter-rouge">tail</code> respectively:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano middle.sh
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="c"># head -n 15 octane.pdb | tail -n 5</span>
+
+<span class="nb">head</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> | <span class="nb">tail</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$3</span><span class="s2">"</span>  <span class="c"># $1 = filename,   line-range=($2-$3) to $2</span>
+</code></pre></div></div>
+
+<p>We can now run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./middle.sh pentane.pdb 15 5
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ATOM      9  H           1       1.324   0.350  -1.332  1.00  0.00
+ATOM     10  H           1       1.271   1.378   0.122  1.00  0.00
+ATOM     11  H           1      -0.074  -0.384   1.288  1.00  0.00
+ATOM     12  H           1      -0.048  -1.362  -0.205  1.00  0.00
+ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00
+</code></pre></div></div>
+
+<p>By changing the arguments to our command we can change our script’s
+behaviour:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>bash middle.sh pentane.pdb 20 5
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ATOM     14  H           1      -1.259   1.420   0.112  1.00  0.00
+ATOM     15  H           1      -2.608  -0.407   1.130  1.00  0.00
+ATOM     16  H           1      -2.540  -1.303  -0.404  1.00  0.00
+ATOM     17  H           1      -3.393   0.254  -0.321  1.00  0.00
+TER      18              1
+</code></pre></div></div>
+
+<p>This works,
+but it may take the next person who reads <code class="highlighter-rouge">middle.sh</code> a moment to figure out what it does.
+We can improve our script by adding some <strong>comments</strong> at the top:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano middle.sh
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="c"># Select lines from the middle of a file.</span>
+<span class="c"># Usage: bash middle.sh filename end_line num_lines</span>
+<span class="nb">head</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> | <span class="nb">tail</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$3</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>A comment starts with a <code class="highlighter-rouge">#</code> character and runs to the end of the line.
+The computer ignores comments,
+but they’re invaluable for helping people (including your future self) understand and use scripts.
+The only caveat is that each time you modify the script,
+you should check that the comment is still accurate:
+an explanation that sends the reader in the wrong direction is worse than none at all.</p>
+
+<p>What if we want to process many files in a single pipeline?
+For example, if we want to sort our <code class="highlighter-rouge">.pdb</code> files by length, we would type:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">wc</span> <span class="nt">-l</span> <span class="k">*</span>.pdb | <span class="nb">sort</span> <span class="nt">-n</span>
+</code></pre></div></div>
+
+<p>because <code class="highlighter-rouge">wc -l</code> lists the number of lines in the files
+(recall that <code class="highlighter-rouge">wc</code> stands for ‘word count’, adding the <code class="highlighter-rouge">-l</code> option means ‘count lines’ instead)
+and <code class="highlighter-rouge">sort -n</code> sorts things numerically.
+We could put this in a file,
+but then it would only ever sort a list of <code class="highlighter-rouge">.pdb</code> files in the current directory.
+If we want to be able to get a sorted list of other kinds of files,
+we need a way to get all those names into the script.
+We can’t use <code class="highlighter-rouge">$1</code>, <code class="highlighter-rouge">$2</code>, and so on
+because we don’t know how many files there are.
+Instead, we use the special variable <code class="highlighter-rouge">$@</code>,
+which means,
+‘All of the command-line arguments to the shell script’.
+We also should put <code class="highlighter-rouge">$@</code> inside double-quotes
+to handle the case of arguments containing spaces
+(<code class="highlighter-rouge">"$@"</code> is equivalent to <code class="highlighter-rouge">"$1"</code> <code class="highlighter-rouge">"$2"</code> …)
+Here’s an example:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano sorted.sh
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># Sort files by their length.</span>
+<span class="c"># Usage: bash sorted.sh one_or_more_filenames</span>
+<span class="nb">wc</span> <span class="nt">-l</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span> | <span class="nb">sort</span> <span class="nt">-n</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>bash sorted.sh <span class="k">*</span>.pdb ../creatures/<span class="k">*</span>.dat
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>9 methane.pdb
+12 ethane.pdb
+15 propane.pdb
+20 cubane.pdb
+21 pentane.pdb
+30 octane.pdb
+163 ../creatures/basilisk.dat
+163 ../creatures/minotaur.dat
+163 ../creatures/unicorn.dat
+596 total
+</code></pre></div></div>
+
+<blockquote class="challenge">
+  <h2 id="list-unique-species">List Unique Species</h2>
+
+  <p>Leah has several hundred data files, each of which is formatted like this:</p>
+
+  <div class="source highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2013-11-05,deer,5
+2013-11-05,rabbit,22
+2013-11-05,raccoon,7
+2013-11-06,rabbit,19
+2013-11-06,deer,2
+2013-11-06,fox,1
+2013-11-07,rabbit,18
+2013-11-07,bear,1
+</code></pre></div>  </div>
+
+  <p>An example of this type of file is given in <code class="highlighter-rouge">data-shell/data/animal-counts/animals.txt</code>.</p>
+
+  <p>We can use the command <code class="highlighter-rouge">cut -d , -f 2 animals.txt | sort | uniq</code> to produce the unique species in <code class="highlighter-rouge">animals.txt</code>. In order to avoid having to type out this series of commands every time, a scientist may choose to write a shell script instead.</p>
+
+  <p>Write a shell script called <code class="highlighter-rouge">species.sh</code> that takes any number of
+filenames as command-line arguments, and uses a variation of the above command to print a list of the unique species appearing in each of those files separately.</p>
+
+  <blockquote class="solution">
+    <h2 id="solution">Solution</h2>
+
+    <div class="source highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Script to find unique species in csv files where species is the second data field
+# This script accepts any number of file names as command line arguments
+
+# Loop over all files
+for file in $@
+do
+	echo "Unique species in $file:"
+	# Extract species names
+	cut -d , -f 2 $file | sort | uniq
+done
+</code></pre></div>    </div>
+  </blockquote>
+</blockquote>
+
+<!---
+Suppose we have just run a series of commands that did something useful --- for example,
+that created a graph we'd like to use in a paper.
+We'd like to be able to re-create the graph later if we need to,
+so we want to save the commands in a file.
+Instead of typing them in again
+(and potentially getting them wrong)
+we can do this:
+
+~~~
+$ history | tail -n 5 > redo-figure-3.sh
+~~~
+{: .language-bash}
+
+The file `redo-figure-3.sh` now contains:
+
+~~~
+297 bash goostats NENE01729B.txt stats-NENE01729B.txt
+298 bash goodiff stats-NENE01729B.txt /data/validated/01729.txt > 01729-differences.txt
+299 cut -d ',' -f 2-3 01729-differences.txt > 01729-time-series.txt
+300 ygraph --format scatter --color bw --borders none 01729-time-series.txt figure-3.png
+301 history | tail -n 5 > redo-figure-3.sh
+~~~
+{: .source}
+
+After a moment's work in an editor to remove the serial numbers on the commands,
+and to remove the final line where we called the `history` command,
+we have a completely accurate record of how we created that figure.
+
+> ## Why Record Commands in the History Before Running Them?
+>
+> If you run the command:
+>
+> ~~~
+> $ history | tail -n 5 > recent.sh
+> ~~~
+> {: .language-bash}
+>
+> the last command in the file is the `history` command itself, i.e.,
+> the shell has added `history` to the command log before actually
+> running it. In fact, the shell *always* adds commands to the log
+> before running them. Why do you think it does this?
+>
+> > ## Solution
+> > If a command causes something to crash or hang, it might be useful
+> > to know what that command was, in order to investigate the problem.
+> > Were the command only be recorded after running it, we would not
+> > have a record of the last command run in the event of a crash.
+> {: .solution}
+{: .challenge}
+
+In practice, most people develop shell scripts by running commands at the shell prompt a few times
+to make sure they're doing the right thing,
+then saving them in a file for re-use.
+This style of work allows people to recycle
+what they discover about their data and their workflow with one call to `history`
+and a bit of editing to clean up the output
+and save it as a shell script.
+
+-->
+
+<!--
+
+## Nelle's Pipeline: Creating a Script
+
+
+Nelle's supervisor insisted that all her analytics must be reproducible. The easiest way to capture all the steps is in a script.
+
+First we return to Nelle's data directory:
+```
+$ cd ../north-pacific-gyre/2012-07-03/
+```
+{: .language-bash}
+
+
+She runs the editor and writes the following:
+
+~~~
+#!/bin/bash
+# Calculate stats for data files.
+for datafile in "$@"
+do
+    echo $datafile
+    bash goostats $datafile stats-$datafile
+done
+~~~
+{: .language-bash}
+
+She saves this in a file called `do-stats.sh`
+so that she can now re-do the first stage of her analysis by typing:
+
+~~~
+$ chmod + x do-stats.sh
+$ ./do-stats.sh NENE*[AB].txt
+~~~
+{: .language-bash}
+
+She can also do this:
+
+~~~
+$ ./do-stats.sh NENE*[AB].txt | wc -l
+~~~
+{: .language-bash}
+
+so that the output is just the number of files processed
+rather than the names of the files that were processed.
+
+One thing to note about Nelle's script is that
+it lets the person running it decide what files to process.
+She could have written it as:
+
+~~~
+#!/bin/bash
+# Calculate stats for Site A and Site B data files.
+for datafile in NENE*[AB].txt
+do
+    echo $datafile
+    bash goostats $datafile stats-$datafile
+done
+~~~
+{: .language-bash}
+
+The advantage is that this always selects the right files:
+she doesn't have to remember to exclude the 'Z' files.
+The disadvantage is that it *always* selects just those files --- she can't run it on all files
+(including the 'Z' files),
+or on the 'G' or 'H' files her colleagues in Antarctica are producing,
+without editing the script.
+If she wanted to be more adventurous,
+she could modify her script to check for command-line arguments,
+and use `NENE*[AB].txt` if none were provided.
+Of course, this introduces another tradeoff between flexibility and complexity.
+
+-->
+
+<blockquote class="challenge">
+  <h2 id="variables-in-shell-scripts">Variables in Shell Scripts</h2>
+
+  <p>In the <code class="highlighter-rouge">molecules</code> directory, imagine you have a shell script called <code class="highlighter-rouge">script.sh</code> containing the
+following commands:</p>
+
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">head</span> <span class="nt">-n</span> <span class="nv">$2</span> <span class="nv">$1</span>
+<span class="nb">tail</span> <span class="nt">-n</span> <span class="nv">$3</span> <span class="nv">$1</span>
+</code></pre></div>  </div>
+
+  <p>While you are in the <code class="highlighter-rouge">molecules</code> directory, you type the following command:</p>
+
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash script.sh <span class="s1">'*.pdb'</span> 1 1
+</code></pre></div>  </div>
+
+  <p>Which of the following outputs would you expect to see?</p>
+
+  <ol>
+    <li>All of the lines between the first and the last lines of each file ending in <code class="highlighter-rouge">.pdb</code>
+in the <code class="highlighter-rouge">molecules</code> directory</li>
+    <li>The first and the last line of each file ending in <code class="highlighter-rouge">.pdb</code> in the <code class="highlighter-rouge">molecules</code> directory</li>
+    <li>The first and the last line of each file in the <code class="highlighter-rouge">molecules</code> directory</li>
+    <li>An error because of the quotes around <code class="highlighter-rouge">*.pdb</code></li>
+  </ol>
+
+  <blockquote class="solution">
+    <h2 id="solution-1">Solution</h2>
+    <p>The correct answer is 2.</p>
+
+    <p>The special variables $1, $2 and $3 represent the command line arguments given to the
+script, such that the commands run are:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">head</span> <span class="nt">-n</span> 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
+<span class="nv">$ </span><span class="nb">tail</span> <span class="nt">-n</span> 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
+</code></pre></div>    </div>
+    <p>The shell does not expand <code class="highlighter-rouge">'*.pdb'</code> because it is enclosed by quote marks.
+As such, the first argument to the script is <code class="highlighter-rouge">'*.pdb'</code> which gets expanded within the
+script by <code class="highlighter-rouge">head</code> and <code class="highlighter-rouge">tail</code>.</p>
+  </blockquote>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="find-the-longest-file-with-a-given-extension">Find the Longest File With a Given Extension</h2>
+
+  <p>Write a shell script called <code class="highlighter-rouge">longest.sh</code> that takes the name of a
+directory and a filename extension as its arguments, and prints
+out the name of the file with the most lines in that directory
+with that extension. For example:</p>
+
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>bash longest.sh /tmp/data pdb
+</code></pre></div>  </div>
+
+  <p>would print the name of the <code class="highlighter-rouge">.pdb</code> file in <code class="highlighter-rouge">/tmp/data</code> that has
+the most lines.</p>
+
+  <blockquote class="solution">
+    <h2 id="solution-2">Solution</h2>
+
+    <div class="source highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Shell script which takes two arguments:
+#    1. a directory name
+#    2. a file extension
+# and prints the name of the file in that directory
+# with the most lines which matches the file extension.
+
+wc -l $1/*.$2 | sort -n | tail -n 2 | head -n 1
+</code></pre></div>    </div>
+  </blockquote>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="script-reading-comprehension">Script Reading Comprehension</h2>
+
+  <p>For this question, consider the <code class="highlighter-rouge">data-shell/molecules</code> directory once again.
+This contains a number of <code class="highlighter-rouge">.pdb</code> files in addition to any other files you
+may have created.
+Explain what each of the following three scripts would do when run as
+<code class="highlighter-rouge">bash script1.sh *.pdb</code>, <code class="highlighter-rouge">bash script2.sh *.pdb</code>, and <code class="highlighter-rouge">bash script3.sh *.pdb</code> respectively.</p>
+
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Script 1</span>
+<span class="nb">echo</span> <span class="k">*</span>.<span class="k">*</span>
+</code></pre></div>  </div>
+
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Script 2</span>
+<span class="k">for </span>filename <span class="k">in</span> <span class="nv">$1</span> <span class="nv">$2</span> <span class="nv">$3</span>
+<span class="k">do
+    </span><span class="nb">cat</span> <span class="nv">$filename</span>
+<span class="k">done</span>
+</code></pre></div>  </div>
+
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Script 3</span>
+<span class="nb">echo</span> <span class="nv">$@</span>.pdb
+</code></pre></div>  </div>
+
+  <blockquote class="solution">
+    <h2 id="solutions">Solutions</h2>
+    <p>In each case, the shell expands the wildcard in <code class="highlighter-rouge">*.pdb</code> before passing the resulting
+list of file names as arguments to the script.</p>
+
+    <p>Script 1 would print out a list of all files containing a dot in their name.
+The arguments passed to the script are not actually used anywhere in the script.</p>
+
+    <p>Script 2 would print the contents of the first 3 files with a <code class="highlighter-rouge">.pdb</code> file extension.
+<code class="highlighter-rouge">$1</code>, <code class="highlighter-rouge">$2</code>, and <code class="highlighter-rouge">$3</code> refer to the first, second, and third argument respectively.</p>
+
+    <p>Script 3 would print all the arguments to the script (i.e. all the <code class="highlighter-rouge">.pdb</code> files),
+followed by <code class="highlighter-rouge">.pdb</code>.
+<code class="highlighter-rouge">$@</code> refers to <em>all</em> the arguments given to a shell script.</p>
+    <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cubane.pdb ethane.pdb methane.pdb octane.pdb pentane.pdb propane.pdb.pdb
+</code></pre></div>    </div>
+  </blockquote>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="debugging-scripts">Debugging Scripts</h2>
+
+  <p>Suppose you have saved the following script in a file called <code class="highlighter-rouge">do-errors.sh</code>
+in Nelle’s <code class="highlighter-rouge">north-pacific-gyre/2012-07-03</code> directory:</p>
+
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Calculate stats for data files.</span>
+<span class="k">for </span>datafile <span class="k">in</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+<span class="k">do
+    </span><span class="nb">echo</span> <span class="nv">$datfile</span>
+    bash goostats <span class="nv">$datafile</span> stats-<span class="nv">$datafile</span>
+<span class="k">done</span>
+</code></pre></div>  </div>
+
+  <p>When you run it:</p>
+
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>bash <span class="k">do</span><span class="nt">-errors</span>.sh NENE<span class="k">*</span><span class="o">[</span>AB].txt
+</code></pre></div>  </div>
+
+  <p>the output is blank.
+To figure out why, re-run the script using the <code class="highlighter-rouge">-x</code> option:</p>
+
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash <span class="nt">-x</span> <span class="k">do</span><span class="nt">-errors</span>.sh NENE<span class="k">*</span><span class="o">[</span>AB].txt
+</code></pre></div>  </div>
+
+  <p>What is the output showing you?
+Which line is responsible for the error?</p>
+
+  <blockquote class="solution">
+    <h2 id="solution-3">Solution</h2>
+    <p>The <code class="highlighter-rouge">-x</code> option causes <code class="highlighter-rouge">bash</code> to run in debug mode.
+This prints out each command as it is run, which will help you to locate errors.
+In this example, we can see that <code class="highlighter-rouge">echo</code> isn’t printing anything. We have made a typo
+in the loop variable name, and the variable <code class="highlighter-rouge">datfile</code> doesn’t exist, hence returning
+an empty string.</p>
+  </blockquote>
+</blockquote>
+:ET

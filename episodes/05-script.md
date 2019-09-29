@@ -62,17 +62,19 @@ Now, we run the following command:
 $ ./myscript.sh
 ~~~
 
->## Varaibles
+>## Variables
 > A variable is a placeholder for the data. In shell script, variables are as
->* varibleName=variable value (**Note: No spaces on either side of the = sign**).
+>* variableName=variable value (**Note: No spaces on either side of the = sign**).
 >* While calling the varible, `$` sign must be called before the variable name.
+>* Variable can be also called using curly braces,`${}`.
 {: .callout}
-
 ~~~
 #!/bin/bash
 
 name="John" # no spaces on either side of the = sign
 echo Hello $name 
+# OR
+echo Hello ${name} 
 ~~~
 {: .source}
 
@@ -485,6 +487,9 @@ and save it as a shell script.
 
 -->
 
+
+<!--
+
 ## Nelle's Pipeline: Creating a Script
 
 
@@ -555,7 +560,7 @@ she could modify her script to check for command-line arguments,
 and use `NENE*[AB].txt` if none were provided.
 Of course, this introduces another tradeoff between flexibility and complexity.
 
-
+-->
 
 > ## Variables in Shell Scripts
 >
@@ -679,6 +684,7 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > {: .solution}
 {: .challenge}
 
+<!--
 > ## Debugging Scripts
 >
 > Suppose you have saved the following script in a file called `do-errors.sh`
@@ -720,3 +726,4 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > > an empty string.
 > {: .solution}
 {: .challenge}
+-->
