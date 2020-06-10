@@ -39,6 +39,7 @@ $ nano myscript.sh
 #!/bin/bash
 # filename: myscript.sh
 # This is our first script
+
 echo "Hello world!" # This is a comment too
 ~~~
 {: .language-bash}
@@ -77,6 +78,7 @@ Hello world!
 #!/bin/bash
 # filename: myscript.sh
 # This is our first script
+
 echo "Hello world!" # This is a comment too
 
 # Varaibles
