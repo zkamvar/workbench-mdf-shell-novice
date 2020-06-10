@@ -138,10 +138,11 @@ key, all the text of the loop arranges in single line, that make hard make
 changes and it is more prone to error. So it is always good to write a script
 file.
 
-Let's create a shell-scrip named `classifiction.sh`:
+Let's create a shell-scrip named `classification.sh`:
 
 ```
 #!/bin/bash
+# filename: classification.sh
 
 for filename in basilisk.dat minotaur.dat unicorn.dat
 do
@@ -154,12 +155,17 @@ Here, filename is a variable, which keeps updating after each iteration.
 Let's run the:
 
 ```
-#!/bin/bash
 $ chmod +x classification.sh
 $ ./classification.sh
 ```
 {: .language-bash}
 
+```
+CLASSIFICATION: basiliscus vulgaris
+CLASSIFICATION: bos hominus
+CLASSIFICATION: equus monoceros
+```
+{: .output}
 
 
 We have called the variable in this loop `filename`
@@ -169,6 +175,7 @@ if we wrote this loop as:
 
 ```
 #!/bin/bash
+# filename: classification.sh
 
 for x in basilisk.dat minotaur.dat unicorn.dat
 do
@@ -424,7 +431,6 @@ from whatever file is being processed
 > To loop over these files, we would need to add double quotes like so:
 >
 > ~~~
-> #!/bin/bash
 > for filename in "red dragon.dat" "purple unicorn.dat"
 > do
 >      head -n 100 "$filename" | tail -n 20
@@ -553,7 +559,9 @@ Let's create a new script file `do-stats.sh`:
 
 ~~~
 #!/bin/bash
+# filename: do-stats.sh
 # Calculate stats for Site A and Site B data files.
+
 for datafile in NENE*[AB].txt
 do
      echo $datafile
@@ -578,6 +586,9 @@ so she modifies her loop to do that:
 
 ~~~
 #!/bin/bash
+# filename: do-stats.sh
+# Calculate stats for Site A and Site B data files.
+
 for datafile in NENE*[AB].txt
 do
      echo $datafile stats-$datafile
@@ -644,6 +655,9 @@ $ for datafile in NENE*[AB].txt; do echo $datafile; bash goostats $datafile stat
 
 ~~~
 #!/bin/bash
+# filename: do-stats.sh
+# Calculate stats for Site A and Site B data files.
+
 for datafile in NENE*[AB].txt
 do
      echo "Processing $datafile..." # add a message for user
@@ -678,7 +692,9 @@ The above script can be easily modified to all the filles in a directory:
 
 ~~~
 #!/bin/bash
+# filename: do-stats.sh
 # Calculate stats for data files.
+
 for datafile in "$@"
 do
     echo $datafile
@@ -697,45 +713,6 @@ script to check for command-line arguments, and use NENE*[AB].txt if none were
 provided. Of course, this introduces another tradeoff between flexibility 
 and complexity.
 
-> ## Those Who Know History Can Choose to Repeat It
->
-> Another way to repeat previous work is to use the `history` command to
-> get a list of the last few hundred commands that have been executed, and
-> then to use `!123` (where '123' is replaced by the command number) to
-> repeat one of those commands. For example, if Nelle types this:
->
-> ~~~
-> $ history | tail -n 5
-> ~~~
-> {: .language-bash}
-> ~~~
->   456  ls -l NENE0*.txt
->   457  rm stats-NENE01729B.txt.txt
->   458  bash goostats NENE01729B.txt stats-NENE01729B.txt
->   459  ls -l NENE0*.txt
->   460  history
-> ~~~
-> {: .output}
->
-> then she can re-run `goostats` on `NENE01729B.txt` simply by typing
-> `!458`.
-{: .callout}
-
-> ## Other History Commands
->
-> There are a number of other shortcut commands for getting at the history.
->
-> - `Ctrl-R` enters a history search mode 'reverse-i-search' and finds the
-> most recent command in your history that matches the text you enter next.
-> Press `Ctrl-R` one or more additional times to search for earlier matches.
-> - `!!` retrieves the immediately preceding command
-> (you may or may not find this more convenient than using the up-arrow)
-> - `!$` retrieves the last word of the last command.
-> That's useful more often than you might expect: after
-> `bash goostats NENE01729B.txt stats-NENE01729B.txt`, you can type
-> `less !$` to look at the file `stats-NENE01729B.txt`, which is
-> quicker than doing up-arrow and editing the command-line.
-{: .callout}
 
 > ## Doing a Dry Run
 >
@@ -789,6 +766,101 @@ and complexity.
 > {: .solution}
 {: .challenge}
 
+
+> ## Script Reading Comprehension
+>
+> For this question, consider the `data-shell/molecules` directory once again.
+> This contains a number of `.pdb` files in addition to any other files you
+> may have created.
+> Explain what each of the following three scripts would do when run as
+> `bash script1.sh *.pdb`, `bash script2.sh *.pdb`, and `bash script3.sh *.pdb` respectively.
+>
+> ~~~
+> # Script 1
+> echo *.*
+> ~~~
+> {: .language-bash}
+>
+> ~~~
+> # Script 2
+> for filename in $1 $2 $3
+> do
+>     cat $filename
+> done
+> ~~~
+> {: .language-bash}
+>
+> ~~~
+> # Script 3
+> echo $@.pdb
+> ~~~
+> {: .language-bash}
+>
+> > ## Solutions
+> > In each case, the shell expands the wildcard in `*.pdb` before passing the resulting
+> > list of file names as arguments to the script.
+> >
+> > Script 1 would print out a list of all files containing a dot in their name.
+> > The arguments passed to the script are not actually used anywhere in the script.
+> >
+> > Script 2 would print the contents of the first 3 files with a `.pdb` file extension.
+> > `$1`, `$2`, and `$3` refer to the first, second, and third argument respectively.
+> >
+> > Script 3 would print all the arguments to the script (i.e. all the `.pdb` files),
+> > followed by `.pdb`.
+> > `$@` refers to *all* the arguments given to a shell script.
+> > ```
+> > cubane.pdb ethane.pdb methane.pdb octane.pdb pentane.pdb propane.pdb.pdb
+> > ```
+> > {: .output}
+> {: .solution}
+{: .challenge}
+
+
+
+> ## Debugging Scripts
+>
+> Suppose you have saved the following script in a file called `do-errors.sh`
+> in Nelle's `north-pacific-gyre/2012-07-03` directory:
+>
+> ~~~
+> # Calculate stats for data files.
+> for datafile in "$@"
+> do
+>     echo $datfile
+>     bash goostats $datafile stats-$datafile
+> done
+> ~~~
+> {: .language-bash}
+>
+> When you run it:
+>
+> ~~~
+> $ bash do-errors.sh NENE*[AB].txt
+> ~~~
+> {: .language-bash}
+>
+> the output is blank.
+> To figure out why, re-run the script using the `-x` option:
+>
+> ~~~
+> bash -x do-errors.sh NENE*[AB].txt
+> ~~~
+> {: .language-bash}
+>
+> What is the output showing you?
+> Which line is responsible for the error?
+>
+> > ## Solution
+> > The `-x` option causes `bash` to run in debug mode.
+> > This prints out each command as it is run, which will help you to locate errors.
+> > In this example, we can see that `echo` isn't printing anything. We have made a typo
+> > in the loop variable name, and the variable `datfile` doesn't exist, hence returning
+> > an empty string.
+> {: .solution}
+{: .challenge}
+
+
 > ## Nested Loops
 >
 > Suppose we want to set up up a directory structure to organize
@@ -815,3 +887,44 @@ and complexity.
 > > Try running the code for yourself to see which directories are created!
 > {: .solution}
 {: .challenge}
+
+
+> ## Those Who Know History Can Choose to Repeat It
+>
+> Another way to repeat previous work is to use the `history` command to
+> get a list of the last few hundred commands that have been executed, and
+> then to use `!123` (where '123' is replaced by the command number) to
+> repeat one of those commands. For example, if Nelle types this:
+>
+> ~~~
+> $ history | tail -n 5
+> ~~~
+> {: .language-bash}
+> ~~~
+>   456  ls -l NENE0*.txt
+>   457  rm stats-NENE01729B.txt.txt
+>   458  bash goostats NENE01729B.txt stats-NENE01729B.txt
+>   459  ls -l NENE0*.txt
+>   460  history
+> ~~~
+> {: .output}
+>
+> then she can re-run `goostats` on `NENE01729B.txt` simply by typing
+> `!458`.
+{: .callout}
+
+> ## Other History Commands
+>
+> There are a number of other shortcut commands for getting at the history.
+>
+> - `Ctrl-R` enters a history search mode 'reverse-i-search' and finds the
+> most recent command in your history that matches the text you enter next.
+> Press `Ctrl-R` one or more additional times to search for earlier matches.
+> - `!!` retrieves the immediately preceding command
+> (you may or may not find this more convenient than using the up-arrow)
+> - `!$` retrieves the last word of the last command.
+> That's useful more often than you might expect: after
+> `bash goostats NENE01729B.txt stats-NENE01729B.txt`, you can type
+> `less !$` to look at the file `stats-NENE01729B.txt`, which is
+> quicker than doing up-arrow and editing the command-line.
+{: .callout}

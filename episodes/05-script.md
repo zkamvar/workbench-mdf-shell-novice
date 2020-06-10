@@ -41,7 +41,7 @@ $ nano myscript.sh
 # This is our first script
 echo "Hello world!" # This is a comment too
 ~~~
-{: .source}
+{: .language-bash}
 
 
 >## Comments
@@ -86,7 +86,7 @@ echo Hello $name
 # OR
 echo Hello ${name} 
 ~~~
-{: .source}
+{: .language-bash}
 
 ~~~
 $ ./myscript.sh
@@ -137,7 +137,7 @@ We can use the text editor to directly edit the file -- we'll simply insert the 
 
 head -n 15 octane.pdb | tail -n 5
 ~~~
-{: .source}
+{: .language-bash}
 
 This is a variation on the pipe we constructed earlier:
 it selects lines 11-15 of the file `octane.pdb`.
@@ -165,7 +165,6 @@ $ ./middle.sh
 ~~~
 {: .source}
 
-{: .language-bash}
 
 ~~~
 ATOM      9  H           1      -4.502   0.681   0.785  1.00  0.00
@@ -214,7 +213,7 @@ Now, within "nano", replace the text `octane.pdb` with the special variable call
 
 head -n 15 "$1" | tail -n 5  # octane.pdb -> $1
 ~~~
-{: .source}
+{: .language-bash}
 
 Inside a shell script,
 `$1` means 'the first filename (or other argument) on the command line'.
