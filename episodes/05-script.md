@@ -37,6 +37,7 @@ $ nano myscript.sh
 
 ~~~
 #!/bin/bash
+# filename: myscript.sh
 # This is our first script
 echo "Hello world!" # This is a comment too
 ~~~
@@ -57,10 +58,14 @@ is done using chmod as:
 ~~~
 $ chmod +x myscript.sh
 ~~~
+{: .source}
+
 Now, we run the following command:
 ~~~
 $ ./myscript.sh
+Hello world!
 ~~~
+{: .source}
 
 >## Variables
 > A variable is a placeholder for the data. In shell script, variables are as
@@ -70,6 +75,11 @@ $ ./myscript.sh
 {: .callout}
 ~~~
 #!/bin/bash
+# filename: myscript.sh
+# This is our first script
+echo "Hello world!" # This is a comment too
+
+# Varaibles
 
 name="John" # no spaces on either side of the = sign
 echo Hello $name 
@@ -79,17 +89,21 @@ echo Hello ${name}
 {: .source}
 
 ~~~
-$ ./variable.sh
+$ ./myscript.sh
+Hello world!
+Hello John
 Hello John
 ~~~
 {: .language-bash}
 
+<!---
 >## Command as Variable
 > It is also possible to save the output of a command to a variable and this is
 >done using the backtick(`).
 {: .callout}
 ~~~
 #!/bin/bash
+# filename: myscript.sh
 
 name="John" # no spaces on either side of the = sign
 echo Hello $name 
@@ -99,7 +113,7 @@ echo now
 ~~~
 {: .source}
 
-
+--->
 
 
 
@@ -119,6 +133,8 @@ We can use the text editor to directly edit the file -- we'll simply insert the 
 
 ~~~
 #!/bin/bash
+# filename: middle.sh
+
 head -n 15 octane.pdb | tail -n 5
 ~~~
 {: .source}
@@ -139,6 +155,7 @@ is done using chmod as:
 ~~~
 chmod +x middle.sh
 ~~~
+{: .source}
 
 Now, we can ask the shell to execute the commands it contains.
 so we run the following command:
@@ -146,6 +163,7 @@ so we run the following command:
 ~~~ {.bash}
 $ ./middle.sh
 ~~~
+{: .source}
 
 {: .language-bash}
 
@@ -192,9 +210,11 @@ Now, within "nano", replace the text `octane.pdb` with the special variable call
 
 ~~~
 #!/bin/bash
+# filename: middle.sh
+
 head -n 15 "$1" | tail -n 5  # octane.pdb -> $1
 ~~~
-{: .output}
+{: .source}
 
 Inside a shell script,
 `$1` means 'the first filename (or other argument) on the command line'.
@@ -262,12 +282,13 @@ $ nano middle.sh
 
 ~~~
 #!/bin/bash
+# filename: middle.sh
 
 # head -n 15 octane.pdb | tail -n 5
 
 head -n "$2" "$1" | tail -n "$3"  # $1 = filename,   line-range=($2-$3) to $2
 ~~~
-{: .output}
+{: .language-bash}
 
 We can now run:
 
@@ -313,12 +334,14 @@ $ nano middle.sh
 
 ~~~
 #!/bin/bash
+# filename: middle.sh
 
 # Select lines from the middle of a file.
 # Usage: bash middle.sh filename end_line num_lines
+
 head -n "$2" "$1" | tail -n "$3"
 ~~~
-{: .output}
+{: .language-bash}
 
 A comment starts with a `#` character and runs to the end of the line.
 The computer ignores comments,
@@ -359,11 +382,12 @@ $ nano sorted.sh
 
 ~~~
 #!/bin/bash
+#filename: sorted.sh
 # Sort files by their length.
 # Usage: bash sorted.sh one_or_more_filenames
 wc -l "$@" | sort -n
 ~~~
-{: .output}
+{: .language-bash}
 
 ~~~
 $ bash sorted.sh *.pdb ../creatures/*.dat
@@ -506,6 +530,7 @@ She runs the editor and writes the following:
 
 ~~~
 #!/bin/bash
+# filename: do-stats.sh
 # Calculate stats for data files.
 for datafile in "$@"
 do
@@ -540,6 +565,7 @@ She could have written it as:
 
 ~~~
 #!/bin/bash
+# filename: do-stats.sh
 # Calculate stats for Site A and Site B data files.
 for datafile in NENE*[AB].txt
 do
@@ -635,6 +661,8 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > {: .solution}
 {: .challenge}
 
+
+<!---
 > ## Script Reading Comprehension
 >
 > For this question, consider the `data-shell/molecules` directory once again.
@@ -683,7 +711,7 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > > {: .output}
 > {: .solution}
 {: .challenge}
-
+--->
 <!--
 > ## Debugging Scripts
 >
