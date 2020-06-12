@@ -222,7 +222,7 @@ Inside a shell script,
 
 
 >## Command line arguments
->* `$0`: The name of the scrip.
+>* `$0`: The name of the script.
 >* `$1`-`$9`:`$1` is the first argument, `$2` is the second and so on.
 >* `$#`: How many command line arguments were given to the script.
 >* `$*`:  All of the command line arguments.

@@ -138,7 +138,7 @@ key, all the text of the loop arranges in single line, that make hard make
 changes and it is more prone to error. So it is always good to write a script
 file.
 
-Let's create a shell-scrip named `classification.sh`:
+Let's create a shell-script named `classification.sh`:
 
 ```
 #!/bin/bash
