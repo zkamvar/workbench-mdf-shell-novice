@@ -13,7 +13,7 @@ You need to download some files to follow this lesson:
 - Open a terminal and type the following command to download the file.
 
 ~~~
-$ wget https://monashdatafluency.github.io/shell-novice/data/data-shell.zip
+$ wget https://WEHI-ResearchComputing.github.io/mdf-shell-novice/data/data-shell.zip
 ~~~
 {: .language-bash} 
 
