@@ -27,7 +27,7 @@ life_cycle: 'stable'
 license: 'CC-BY 4.0'
 
 # Link to the source repository for this lesson
-source: 'https://github.com/fishtree-attempt/mdf-shell-novice/'
+source: 'https://github.com/zkamvar/mdf-shell-novice'
 
 # Default branch of your lesson
 branch: 'main'
@@ -82,7 +82,6 @@ profiles:
 # sandpaper and varnish versions) should live
 
 
-url: https://preview.carpentries.org/mdf-shell-novice
+url: 'https://zkamvar.github.io/mdf-shell-novice'
 analytics: carpentries
 lang: en
-workbench-beta: yes
