@@ -132,10 +132,10 @@ Desktop      Downloads    Movies       Pictures     data-shell
 ~~~
 {: .output}
 
-Most of the operating system gives color output for the `ls` command. Directories,
-files, executables can be easiliy differentiable based on their color. In case
-your are getting color output for `ls` command then add a flaf `-F` to `ls`. This will
-add a trailing at the end of the output names:
+Most operating systems give color output for the `ls` command. Directories,
+files, executables can be easiliy differentiated based on their color. In case
+your are not getting color output for the `ls` command then add a flag `-F` to `ls`. This will
+add a trailing forward-slash at the end of the output names:
 - a trailing `/` indicates that this is a directory
 - `@` indicates a link
 - `*` indicates an executable
