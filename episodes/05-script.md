@@ -1,22 +1,23 @@
 ---
-title: "Shell Scripts"
+title: Shell Scripts
 teaching: 30
 exercises: 15
-questions:
-- "How can I save and re-use commands?"
-objectives:
-- "Write a shell script that runs a command or series of commands for a fixed set of files."
-- "Run a shell script from the command line."
-- "Write a shell script that operates on a set of files defined by the user on the command line."
-- "Create pipelines that include shell scripts you, and others, have written."
-keypoints:
-- "Save commands in files (usually called shell scripts) for re-use."
-- "`bash filename` runs the commands saved in a file."
-- "`$@` refers to all of a shell script's command-line arguments."
-- "`$1`, `$2`, etc., refer to the first command-line argument, the second command-line argument, etc."
-- "Place variables in quotes if the values might have spaces in them."
-- "Letting users decide what files to process is more flexible and more consistent with built-in Unix commands."
 ---
+
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Write a shell script that runs a command or series of commands for a fixed set of files.
+- Run a shell script from the command line.
+- Write a shell script that operates on a set of files defined by the user on the command line.
+- Create pipelines that include shell scripts you, and others, have written.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- How can I save and re-use commands?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 We are finally ready to see what makes the shell such a powerful programming environment.
 We are going to take the commands we repeat frequently and save them in files
@@ -26,29 +27,31 @@ a bunch of commands saved in a file is usually called a **shell script**,
 but make no mistake:
 these are actually small programs.
 
+:::::::::::::::::::::::::::::::::::::::::  callout
 
->## Script File Format
-{: .callout}
+## Script File Format
 
-~~~
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+```bash
 $ nano myscript.sh
-~~~
-{: .language-bash}
+```
 
-~~~
+```bash
 #!/bin/bash
 # filename: myscript.sh
 # This is our first script
 
 echo "Hello world!" # This is a comment too
-~~~
-{: .language-bash}
+```
 
+:::::::::::::::::::::::::::::::::::::::::  callout
 
->## Comments
->Comments start with the symbol #. Anything after the # is not get executed.
->
-{: .callout}
+## Comments
+
+Comments start with the symbol #. Anything after the # is not get executed.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 Then we save the file (`Ctrl-O` in nano), and exit the text editor (`Ctrl-X` in nano).
 
@@ -56,25 +59,31 @@ Once we have saved the file,
 we need to change the file permission to execute. This
 is done using chmod as:
 
-~~~
+```source
 $ chmod +x myscript.sh
-~~~
-{: .source}
+```
 
 Now, we run the following command:
-~~~
+
+```source
 $ ./myscript.sh
 Hello world!
-~~~
-{: .source}
+```
 
->## Variables
-> A variable is a placeholder for the data. In shell script, variables are as
->* variableName=variable value (**Note: No spaces on either side of the = sign**).
->* While calling the varible, `$` sign must be called before the variable name.
->* Variable can be also called using curly braces,`${}`.
-{: .callout}
-~~~
+:::::::::::::::::::::::::::::::::::::::::  callout
+
+## Variables
+
+A variable is a placeholder for the data. In shell script, variables are as
+
+- variableName=variable value (**Note: No spaces on either side of the = sign**).
+- While calling the varible, `$` sign must be called before the variable name.
+- Variable can be also called using curly braces,`${}`.
+  
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+```bash
 #!/bin/bash
 # filename: myscript.sh
 # This is our first script
@@ -87,16 +96,14 @@ name="John" # no spaces on either side of the = sign
 echo Hello $name 
 # OR
 echo Hello ${name} 
-~~~
-{: .language-bash}
+```
 
-~~~
+```bash
 $ ./myscript.sh
 Hello world!
 Hello John
 Hello John
-~~~
-{: .language-bash}
+```
 
 <!---
 >## Command as Variable
@@ -117,29 +124,25 @@ echo now
 
 --->
 
-
-
 Let's start by going back to `molecules/` and creating a new file, `middle.sh` which will
 become our shell script:
 
-~~~
+```bash
 $ cd molecules
 $ nano middle.sh
-~~~
-{: .language-bash}
+```
 
 The command `nano middle.sh` opens the file `middle.sh` within the text editor 'nano'
 (which runs within the shell).
 If the file does not exist, it will be created.
 We can use the text editor to directly edit the file -- we'll simply insert the following line:
 
-~~~
+```bash
 #!/bin/bash
 # filename: middle.sh
 
 head -n 15 octane.pdb | tail -n 5
-~~~
-{: .language-bash}
+```
 
 This is a variation on the pipe we constructed earlier:
 it selects lines 11-15 of the file `octane.pdb`.
@@ -147,53 +150,51 @@ Remember, we are *not* running it as a command just yet:
 we are putting the commands in a file.
 
 Then we save the file (`Ctrl-O` in nano),
- and exit the text editor (`Ctrl-X` in nano).
+and exit the text editor (`Ctrl-X` in nano).
 Check that the directory `molecules` now contains a file called `middle.sh`.
 
 Once we have saved the file,
 we need to change the file permission to execute. This
 is done using chmod as:
 
-~~~
+```source
 chmod +x middle.sh
-~~~
-{: .source}
+```
 
 Now, we can ask the shell to execute the commands it contains.
 so we run the following command:
 
-~~~ {.bash}
+```{.bash, info=source}
 $ ./middle.sh
-~~~
-{: .source}
+```
 
-
-~~~
+```output
 ATOM      9  H           1      -4.502   0.681   0.785  1.00  0.00
 ATOM     10  H           1      -5.254  -0.243  -0.537  1.00  0.00
 ATOM     11  H           1      -4.357   1.252  -0.895  1.00  0.00
 ATOM     12  H           1      -3.009  -0.741  -1.467  1.00  0.00
 ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00
-~~~
-{: .output}
+```
 
 Sure enough,
 our script's output is exactly what we would get if we ran that pipeline directly.
 
-> ## Text vs. Whatever
->
-> We usually call programs like Microsoft Word or LibreOffice Writer "text
-> editors", but we need to be a bit more careful when it comes to
-> programming. By default, Microsoft Word uses `.docx` files to store not
-> only text, but also formatting information about fonts, headings, and so
-> on. This extra information isn't stored as characters, and doesn't mean
-> anything to tools like `head`: they expect input files to contain
-> nothing but the letters, digits, and punctuation on a standard computer
-> keyboard. When editing programs, therefore, you must either use a plain
-> text editor, or be careful to save files as plain text.
-{: .callout}
+:::::::::::::::::::::::::::::::::::::::::  callout
+
+## Text vs. Whatever
+
+We usually call programs like Microsoft Word or LibreOffice Writer "text
+editors", but we need to be a bit more careful when it comes to
+programming. By default, Microsoft Word uses `.docx` files to store not
+only text, but also formatting information about fonts, headings, and so
+on. This extra information isn't stored as characters, and doesn't mean
+anything to tools like `head`: they expect input files to contain
+nothing but the letters, digits, and punctuation on a standard computer
+keyboard. When editing programs, therefore, you must either use a plain
+text editor, or be careful to save files as plain text.
 
 
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 In the above script, we have selected 11-15 line from the octane.pdb.
 What if we want to select lines from an arbitrary file?
@@ -202,138 +203,129 @@ but that would probably take longer than typing the command out again
 in the shell and executing it with a new file name.
 Instead, let's edit `middle.sh` and make it more versatile:
 
-~~~
+```bash
 $ nano middle.sh
-~~~
-{: .language-bash}
+```
 
 Now, within "nano", replace the text `octane.pdb` with the special variable called `$1`:
 
-~~~
+```bash
 #!/bin/bash
 # filename: middle.sh
 
 head -n 15 "$1" | tail -n 5  # octane.pdb -> $1
-~~~
-{: .language-bash}
+```
 
 Inside a shell script,
 `$1` means 'the first filename (or other argument) on the command line'.
 
+:::::::::::::::::::::::::::::::::::::::::  callout
 
->## Command line arguments
->* `$0`: The name of the script.
->* `$1`-`$9`:`$1` is the first argument, `$2` is the second and so on.
->* `$#`: How many command line arguments were given to the script.
->* `$*`:  All of the command line arguments.
-{: .callout}
+## Command line arguments
 
+- `$0`: The name of the script.
+- `$1`\-`$9`:`$1` is the first argument, `$2` is the second and so on.
+- `$#`: How many command line arguments were given to the script.
+- `$*`:  All of the command line arguments.
+  
 
-
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 We can now run our script like this:
 
-
-~~~
+```bash
 $ ./middle.sh octane.pdb
-~~~
-{: .language-bash}
+```
 
-~~~
+```output
 ATOM      9  H           1      -4.502   0.681   0.785  1.00  0.00
 ATOM     10  H           1      -5.254  -0.243  -0.537  1.00  0.00
 ATOM     11  H           1      -4.357   1.252  -0.895  1.00  0.00
 ATOM     12  H           1      -3.009  -0.741  -1.467  1.00  0.00
 ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00
-~~~
-{: .output}
+```
 
 or on a different file like this:
 
-~~~
+```bash
 $ ./middle.sh pentane.pdb
-~~~
-{: .language-bash}
+```
 
-~~~
+```output
 ATOM      9  H           1       1.324   0.350  -1.332  1.00  0.00
 ATOM     10  H           1       1.271   1.378   0.122  1.00  0.00
 ATOM     11  H           1      -0.074  -0.384   1.288  1.00  0.00
 ATOM     12  H           1      -0.048  -1.362  -0.205  1.00  0.00
 ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00
-~~~
-{: .output}
+```
 
-> ## Double-Quotes Around Arguments
->
-> For the same reason that we put the loop variable inside double-quotes,
-> in case the filename happens to contain any spaces,
-> we surround `$1` with double-quotes.
-{: .callout}
+:::::::::::::::::::::::::::::::::::::::::  callout
+
+## Double-Quotes Around Arguments
+
+For the same reason that we put the loop variable inside double-quotes,
+in case the filename happens to contain any spaces,
+we surround `$1` with double-quotes.
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 We still need to edit `middle.sh` each time we want to adjust the range of lines,
 though.
 Let's fix that by using the special variables `$2` and `$3` for the
 number of lines to be passed to `head` and `tail` respectively:
 
-~~~
+```bash
 $ nano middle.sh
-~~~
-{: .language-bash}
+```
 
-~~~
+```bash
 #!/bin/bash
 # filename: middle.sh
 
 # head -n 15 octane.pdb | tail -n 5
 
 head -n "$2" "$1" | tail -n "$3"  # $1 = filename,   line-range=($2-$3) to $2
-~~~
-{: .language-bash}
+```
 
 We can now run:
 
-~~~
+```bash
 $ ./middle.sh pentane.pdb 15 5
-~~~
-{: .language-bash}
+```
 
-~~~
+```output
 ATOM      9  H           1       1.324   0.350  -1.332  1.00  0.00
 ATOM     10  H           1       1.271   1.378   0.122  1.00  0.00
 ATOM     11  H           1      -0.074  -0.384   1.288  1.00  0.00
 ATOM     12  H           1      -0.048  -1.362  -0.205  1.00  0.00
 ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00
-~~~
-{: .output}
+```
 
 By changing the arguments to our command we can change our script's
 behaviour:
 
-~~~
+```bash
 $ bash middle.sh pentane.pdb 20 5
-~~~
-{: .language-bash}
+```
 
-~~~
+```output
 ATOM     14  H           1      -1.259   1.420   0.112  1.00  0.00
 ATOM     15  H           1      -2.608  -0.407   1.130  1.00  0.00
 ATOM     16  H           1      -2.540  -1.303  -0.404  1.00  0.00
 ATOM     17  H           1      -3.393   0.254  -0.321  1.00  0.00
 TER      18              1
-~~~
-{: .output}
+```
 
 This works,
 but it may take the next person who reads `middle.sh` a moment to figure out what it does.
 We can improve our script by adding some **comments** at the top:
 
-~~~
+```bash
 $ nano middle.sh
-~~~
-{: .language-bash}
+```
 
-~~~
+```bash
 #!/bin/bash
 # filename: middle.sh
 
@@ -341,8 +333,7 @@ $ nano middle.sh
 # Usage: bash middle.sh filename end_line num_lines
 
 head -n "$2" "$1" | tail -n "$3"
-~~~
-{: .language-bash}
+```
 
 A comment starts with a `#` character and runs to the end of the line.
 The computer ignores comments,
@@ -354,10 +345,9 @@ an explanation that sends the reader in the wrong direction is worse than none a
 What if we want to process many files in a single pipeline?
 For example, if we want to sort our `.pdb` files by length, we would type:
 
-~~~
+```bash
 $ wc -l *.pdb | sort -n
-~~~
-{: .language-bash}
+```
 
 because `wc -l` lists the number of lines in the files
 (recall that `wc` stands for 'word count', adding the `-l` option means 'count lines' instead)
@@ -376,26 +366,23 @@ to handle the case of arguments containing spaces
 (`"$@"` is equivalent to `"$1"` `"$2"` ...)
 Here's an example:
 
-~~~
+```bash
 $ nano sorted.sh
-~~~
-{: .language-bash}
+```
 
-~~~
+```bash
 #!/bin/bash
 #filename: sorted.sh
 # Sort files by their length.
 # Usage: bash sorted.sh one_or_more_filenames
 wc -l "$@" | sort -n
-~~~
-{: .language-bash}
+```
 
-~~~
+```bash
 $ bash sorted.sh *.pdb ../creatures/*.dat
-~~~
-{: .language-bash}
+```
 
-~~~
+```output
 9 methane.pdb
 12 ethane.pdb
 15 propane.pdb
@@ -406,50 +393,52 @@ $ bash sorted.sh *.pdb ../creatures/*.dat
 163 ../creatures/minotaur.dat
 163 ../creatures/unicorn.dat
 596 total
-~~~
-{: .output}
+```
 
-> ## List Unique Species
->
-> Leah has several hundred data files, each of which is formatted like this:
->
-> ~~~
-> 2013-11-05,deer,5
-> 2013-11-05,rabbit,22
-> 2013-11-05,raccoon,7
-> 2013-11-06,rabbit,19
-> 2013-11-06,deer,2
-> 2013-11-06,fox,1
-> 2013-11-07,rabbit,18
-> 2013-11-07,bear,1
-> ~~~
-> {: .source}
->
-> An example of this type of file is given in `data-shell/data/animal-counts/animals.txt`.
->
-> We can use the command `cut -d , -f 2 animals.txt | sort | uniq` to produce the unique species in `animals.txt`. In order to avoid having to type out this series of commands every time, a scientist may choose to write a shell script instead.
->
-> Write a shell script called `species.sh` that takes any number of
-> filenames as command-line arguments, and uses a variation of the above command to print a list of the unique species appearing in each of those files separately.
->
-> > ## Solution
-> >
-> > ```
-> > # Script to find unique species in csv files where species is the second data field
-> > # This script accepts any number of file names as command line arguments
-> >
-> > # Loop over all files
-> > for file in $@
-> > do
-> > 	echo "Unique species in $file:"
-> > 	# Extract species names
-> > 	cut -d , -f 2 $file | sort | uniq
-> > done
-> > ```
-> > {: .source}
-> {: .solution}
-{: .challenge}
+:::::::::::::::::::::::::::::::::::::::  challenge
 
+## List Unique Species
+
+Leah has several hundred data files, each of which is formatted like this:
+
+```source
+2013-11-05,deer,5
+2013-11-05,rabbit,22
+2013-11-05,raccoon,7
+2013-11-06,rabbit,19
+2013-11-06,deer,2
+2013-11-06,fox,1
+2013-11-07,rabbit,18
+2013-11-07,bear,1
+```
+
+An example of this type of file is given in `data-shell/data/animal-counts/animals.txt`.
+
+We can use the command `cut -d , -f 2 animals.txt | sort | uniq` to produce the unique species in `animals.txt`. In order to avoid having to type out this series of commands every time, a scientist may choose to write a shell script instead.
+
+Write a shell script called `species.sh` that takes any number of
+filenames as command-line arguments, and uses a variation of the above command to print a list of the unique species appearing in each of those files separately.
+
+:::::::::::::::  solution
+
+## Solution
+
+```source
+# Script to find unique species in csv files where species is the second data field
+# This script accepts any number of file names as command line arguments
+
+# Loop over all files
+for file in $@
+do
+	echo "Unique species in $file:"
+	# Extract species names
+	cut -d , -f 2 $file | sort | uniq
+done
+```
+
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 <!---
 Suppose we have just run a series of commands that did something useful --- for example,
@@ -512,7 +501,6 @@ and save it as a shell script.
 
 -->
 
-
 <!--
 
 ## Nelle's Pipeline: Creating a Script
@@ -522,7 +510,7 @@ Nelle's supervisor insisted that all her analytics must be reproducible. The eas
 
 First we return to Nelle's data directory:
 ```
-$ cd ../north-pacific-gyre/2012-07-03/
+$ cd north-pacific-gyre/2012-07-03/
 ```
 {: .language-bash}
 
@@ -589,79 +577,89 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 
 -->
 
-> ## Variables in Shell Scripts
->
-> In the `molecules` directory, imagine you have a shell script called `script.sh` containing the
-> following commands:
->
-> ~~~
-> head -n $2 $1
-> tail -n $3 $1
-> ~~~
-> {: .language-bash}
->
-> While you are in the `molecules` directory, you type the following command:
->
-> ~~~
-> bash script.sh '*.pdb' 1 1
-> ~~~
-> {: .language-bash}
->
-> Which of the following outputs would you expect to see?
->
-> 1. All of the lines between the first and the last lines of each file ending in `.pdb`
->    in the `molecules` directory
-> 2. The first and the last line of each file ending in `.pdb` in the `molecules` directory
-> 3. The first and the last line of each file in the `molecules` directory
-> 4. An error because of the quotes around `*.pdb`
->
-> > ## Solution
-> > The correct answer is 2.
-> >
-> > The special variables $1, $2 and $3 represent the command line arguments given to the
-> > script, such that the commands run are:
-> >
-> > ```
-> > $ head -n 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
-> > $ tail -n 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
-> > ```
-> > {: .language-bash}
-> > The shell does not expand `'*.pdb'` because it is enclosed by quote marks.
-> > As such, the first argument to the script is `'*.pdb'` which gets expanded within the
-> > script by `head` and `tail`.
-> {: .solution}
-{: .challenge}
+:::::::::::::::::::::::::::::::::::::::  challenge
 
-> ## Find the Longest File With a Given Extension
->
-> Write a shell script called `longest.sh` that takes the name of a
-> directory and a filename extension as its arguments, and prints
-> out the name of the file with the most lines in that directory
-> with that extension. For example:
->
-> ~~~
-> $ bash longest.sh /tmp/data pdb
-> ~~~
-> {: .language-bash}
->
-> would print the name of the `.pdb` file in `/tmp/data` that has
-> the most lines.
->
-> > ## Solution
-> >
-> > ```
-> > # Shell script which takes two arguments:
-> > #    1. a directory name
-> > #    2. a file extension
-> > # and prints the name of the file in that directory
-> > # with the most lines which matches the file extension.
-> >
-> > wc -l $1/*.$2 | sort -n | tail -n 2 | head -n 1
-> > ```
-> > {: .source}
-> {: .solution}
-{: .challenge}
+## Variables in Shell Scripts
 
+In the `molecules` directory, imagine you have a shell script called `script.sh` containing the
+following commands:
+
+```bash
+head -n $2 $1
+tail -n $3 $1
+```
+
+While you are in the `molecules` directory, you type the following command:
+
+```bash
+bash script.sh '*.pdb' 1 1
+```
+
+Which of the following outputs would you expect to see?
+
+1. All of the lines between the first and the last lines of each file ending in `.pdb`
+  in the `molecules` directory
+2. The first and the last line of each file ending in `.pdb` in the `molecules` directory
+3. The first and the last line of each file in the `molecules` directory
+4. An error because of the quotes around `*.pdb`
+
+:::::::::::::::  solution
+
+## Solution
+
+The correct answer is 2.
+
+The special variables $1, $2 and $3 represent the command line arguments given to the
+script, such that the commands run are:
+
+```bash
+$ head -n 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
+$ tail -n 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
+```
+
+The shell does not expand `'*.pdb'` because it is enclosed by quote marks.
+As such, the first argument to the script is `'*.pdb'` which gets expanded within the
+script by `head` and `tail`.
+
+
+
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+## Find the Longest File With a Given Extension
+
+Write a shell script called `longest.sh` that takes the name of a
+directory and a filename extension as its arguments, and prints
+out the name of the file with the most lines in that directory
+with that extension. For example:
+
+```bash
+$ bash longest.sh /tmp/data pdb
+```
+
+would print the name of the `.pdb` file in `/tmp/data` that has
+the most lines.
+
+:::::::::::::::  solution
+
+## Solution
+
+```source
+# Shell script which takes two arguments:
+#    1. a directory name
+#    2. a file extension
+# and prints the name of the file in that directory
+# with the most lines which matches the file extension.
+
+wc -l $1/*.$2 | sort -n | tail -n 2 | head -n 1
+```
+
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 <!---
 > ## Script Reading Comprehension
@@ -713,6 +711,7 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > {: .solution}
 {: .challenge}
 --->
+
 <!--
 > ## Debugging Scripts
 >
@@ -756,3 +755,16 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > {: .solution}
 {: .challenge}
 -->
+
+:::::::::::::::::::::::::::::::::::::::: keypoints
+
+- Save commands in files (usually called shell scripts) for re-use.
+- `bash filename` runs the commands saved in a file.
+- `$@` refers to all of a shell script's command-line arguments.
+- `$1`, `$2`, etc., refer to the first command-line argument, the second command-line argument, etc.
+- Place variables in quotes if the values might have spaces in them.
+- Letting users decide what files to process is more flexible and more consistent with built-in Unix commands.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+

@@ -1,27 +1,30 @@
 ---
-title: "Introducing the Shell"
+title: Introducing the Shell
 teaching: 5
 exercises: 0
-questions:
-- "What is a command shell and why would I use one?"
-objectives:
-- "Explain how the shell relates to the keyboard, the screen, the operating system, and users' programs."
-- "Explain when and why command-line interfaces should be used instead of graphical interfaces."
-keypoints:
-- "A shell is a program whose primary purpose is to read commands and run other programs."
-- "The shell's main advantages are its high action-to-keystroke ratio, its support for
-automating repetitive tasks, and its capacity to access networked machines."
-- "The shell's main disadvantages are its primarily textual nature and how
-cryptic its commands and operation can be."
 ---
+
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Explain how the shell relates to the keyboard, the screen, the operating system, and users' programs.
+- Explain when and why command-line interfaces should be used instead of graphical interfaces.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- What is a command shell and why would I use one?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ### Background
+
 At a high level, computers do four things:
 
--   run programs
--   store data
--   communicate with each other, and
--   interact with us
-
+- run programs
+- store data
+- communicate with each other, and
+- interact with us
 
 Computers can interact with us in many different ways,
 such as through a keyboard and mouse, touch screen interfaces, or using speech recognition systems.
@@ -51,7 +54,6 @@ loops back and waits for you to enter another command.
 
 ### The Shell
 
-
 The Shell is a program which runs other programs rather than doing calculations itself.
 Those programs can be as complicated as climate modeling software and as simple as a
 program that creates a new directory. The simple programs which are used to perform
@@ -61,14 +63,12 @@ it's derived from a shell written by Stephen Bourne).
 Bash is the default shell on most modern implementations of Unix
 and in most packages that provide Unix-like tools for Windows.
 
-
 When the shell is first opened, you are presented with a **prompt**,
 indicating that the shell is waiting for input.
 
-~~~
+```bash
 $
-~~~
-{: .language-bash}
+```
 
 The shell typically uses `$ ` as the prompt, but may use a different symbol.
 In the examples for this lesson, we'll show the prompt as `$ `.
@@ -78,32 +78,34 @@ when typing commands, either from these lessons or from other sources,
 
 So let's try our first command, which will list the contents of the current directory:
 
-~~~
+```bash
 $ ls
-~~~
-{: .language-bash}
+```
 
-~~~
+```output
 Desktop     Downloads   Movies      Pictures
 Documents   Library     Music       Public
-~~~
-{: .output}
+```
 
-> ## Command not found
-> If the shell can't find a program whose name is the command you typed, it
-> will print an error message such as:
->
-> ~~~
-> $ ks
-> ~~~
-> {: .language-bash}
-> ~~~
-> ks: command not found
-> ~~~
-> {: .output}
->
-> Usually this means that you have mis-typed the command.
-{: .callout}
+:::::::::::::::::::::::::::::::::::::::::  callout
+
+## Command not found
+
+If the shell can't find a program whose name is the command you typed, it
+will print an error message such as:
+
+```bash
+$ ks
+```
+
+```output
+ks: command not found
+```
+
+Usually this means that you have mis-typed the command.
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ### Is it difficult?
 
@@ -134,20 +136,20 @@ to tackle a wide range of scientific questions and computational challenges.
 
 Nelle Nemo, a marine biologist,
 has just returned from a six-month survey of the
-[North Pacific Gyre](http://en.wikipedia.org/wiki/North_Pacific_Gyre),
+[North Pacific Gyre](https://en.wikipedia.org/wiki/North_Pacific_Gyre),
 where she has been sampling gelatinous marine life in the
-[Great Pacific Garbage Patch](http://en.wikipedia.org/wiki/Great_Pacific_Garbage_Patch).
+[Great Pacific Garbage Patch](https://en.wikipedia.org/wiki/Great_Pacific_Garbage_Patch).
 She has 1520 samples in all and now needs to:
 
-1.  Run each sample through an assay machine
-    that will measure the relative abundance of 300 different proteins.
-    The machine's output for a single sample is
-    a file with one line for each protein.
-2.  Calculate statistics for each of the proteins separately
-    using a program her supervisor wrote called `goostats`.
-3.  Write up results.
-    Her supervisor would really like her to do this by the end of the month
-    so that her paper can appear in an upcoming special issue of *Aquatic Goo Letters*.
+1. Run each sample through an assay machine
+  that will measure the relative abundance of 300 different proteins.
+  The machine's output for a single sample is
+  a file with one line for each protein.
+2. Calculate statistics for each of the proteins separately
+  using a program her supervisor wrote called `goostats`.
+3. Write up results.
+  Her supervisor would really like her to do this by the end of the month
+  so that her paper can appear in an upcoming special issue of *Aquatic Goo Letters*.
 
 It takes her about two weeks to run her samples by the assay machine.
 Now she has the daunting task of analysing her results by running 'goostats'.
@@ -171,4 +173,13 @@ so that her computer can work 24 hours a day while she writes her paper.
 As a bonus,
 once she has put a processing pipeline together,
 she will be able to use it again whenever she collects more data.
+
+:::::::::::::::::::::::::::::::::::::::: keypoints
+
+- A shell is a program whose primary purpose is to read commands and run other programs.
+- The shell's main advantages are its high action-to-keystroke ratio, its support for automating repetitive tasks, and its capacity to access networked machines.
+- The shell's main disadvantages are its primarily textual nature and how cryptic its commands and operation can be.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
